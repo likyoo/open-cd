@@ -1,0 +1,6 @@
+matplotlib
+mmcls>=0.20.1
+mmsegmentation>=0.24.1
+numpy
+packaging
+prettytable
