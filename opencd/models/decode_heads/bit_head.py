@@ -134,7 +134,7 @@ class BITHead(BaseDecodeHead):
         channels (int): Number of output channels of pre_process. Default:  32.
         embed_dims (int): Number of expanded channels of Attention block. Default:  64.
         enc_depth (int): Depth of block of transformer encoder. Default:  1.
-        enc_with_pos (bool)：Using position embedding in transformer encoder.
+        enc_with_pos (bool): Using position embedding in transformer encoder.
             Default:  True
         dec_depth (int): Depth of block of transformer decoder. Default:  8.
         num_heads (int): Number of Multi-Head Cross-Attention Head of transformer encoder.
