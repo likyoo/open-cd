@@ -124,17 +124,26 @@ class TransformerDecoder(nn.Module):
 
 @HEADS.register_module()
 class BITHead(BaseDecodeHead):
-    """
-        in_channels:从backbone输出的特征维度,
-        channels:正常特征维度
-        embed_dims : Attention中扩展的维度
-        enc_depth=1：transformer encoder中block的数目
-        enc_with_pos=True：transformer encoder中是否使用位置编码
-        dec_depth=8：transformer decoder中block的数目
-        num_heads=8：transformer decoder中Multi-Head Cross-Attention的Head数目
-        use_tokenizer=True,
-        token_len=4：单个token的维度，默认是4
-        pre_upsample=2：对backbone中输入的特征进行上采样的倍数，默认采样到64
+    """BIT Head
+
+    This head is the improved implementation of'Remote Sensing Image
+    Change Detection With Transformers<https://github.com/justchenhao/BIT_CD>'
+
+    Args:
+        in_channels (int): Number of input feature channels (from backbone). Default:  512
+        channels (int): Number of output channels of pre_process. Default:  32.
+        embed_dims (int): Number of expanded channels of Attention block. Default:  64.
+        enc_depth (int): Depth of block of transformer encoder. Default:  1.
+        enc_with_pos (bool)：Using position embedding in transformer encoder.
+            Default:  True
+        dec_depth (int): Depth of block of transformer decoder. Default:  8.
+        num_heads (int): Number of Multi-Head Cross-Attention Head of transformer encoder.
+            Default:  8.
+        use_tokenizer (bool),Using semantic token. Default:  True
+        token_len (int): Number of dims of token. Default:  4.
+        pre_upsample (int): Scale factor of upsample of pre_process.
+            (default upsample to 64x64)
+            Default: 2.
     """
 
     def __init__(self,
