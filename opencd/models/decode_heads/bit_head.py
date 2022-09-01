@@ -261,7 +261,7 @@ class BITHead(BaseDecodeHead):
                 H, W) which is feature map for last layer of decoder head.
         """
         inputs = self._transform_inputs(inputs)
-        x1,x2 =torch.chunk(inputs,2,dim=1)
+        x1,x2 = torch.chunk(inputs, 2, dim=1)
         x1 = self.pre_process(x1)
         x2 = self.pre_process(x2)
         # Tokenization
@@ -276,7 +276,7 @@ class BITHead(BaseDecodeHead):
         token = torch.cat([token1, token2], dim=1)
         if self.enc_with_pos:
             token += self.enc_pos_embedding
-        for i,_encoder in enumerate(self.encoder):
+        for i, _encoder in enumerate(self.encoder):
             token = _encoder(token)
         token1, token2 = torch.chunk(token, 2, dim=1)
 
