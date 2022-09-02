@@ -1,12 +1,11 @@
 # model settings
 norm_cfg = dict(type='SyncBN', requires_grad=True)
 model = dict(
-    type='EncoderDecoder',
+    type='SiamEncoderDecoder',
     pretrained='open-mmlab://resnet18_v1c',
     backbone=dict(
         type='ResNetV1c',
         depth=18,
-        in_channels=6,
         num_stages=4,
         out_indices=(0, 1, 2, 3),
         dilations=(1, 1, 1, 1),
