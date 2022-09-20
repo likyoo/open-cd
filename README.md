@@ -7,6 +7,7 @@ Open-CD is an open source change detection toolbox based on a series of open sou
 
 
 ## News
+- 9/20/2022 - The code of [ChangerEx](https://github.com/likyoo/open-cd/tree/main/configs/changer) is available.
 - 9/20/2022 - Our paper [Changer: Feature Interaction is What You Need for Change Detection](https://arxiv.org/abs/2209.08290) is available!
 - 7/30/2022 - Open-CD is publicly available!
 
@@ -47,6 +48,15 @@ python tools/test.py configs/upernet/upernet_r50_512x512_20k_levircd.py  tmp_wor
 If you find this project useful in your research, please consider cite:
 
 ```bibtex
+@article{fang2022changer,
+  title={Changer: Feature Interaction is What You Need for Change Detection}, 
+  author={Sheng Fang and Kaiyu Li and Zhe Li},
+  year={2022},
+  eprint={2209.08290},
+  archivePrefix={arXiv},
+  primaryClass={cs.CV}
+}
+
 @misc{opencd2022,
     title={{Open-CD}: An open source change detection toolbox},
     author={Open-CD Contributors},
