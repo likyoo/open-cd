@@ -7,7 +7,7 @@ Open-CD is an open source change detection toolbox based on a series of open sou
 
 
 ## News
-- 7/30/2022 - Our related paper is coming soon!
+- 9/20/2022 - Our paper [Changer: Feature Interaction is What You Need for Change Detection](https://arxiv.org/abs/2209.08290) is available!
 - 7/30/2022 - Open-CD is publicly available!
 
 ## Plan
