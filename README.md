@@ -7,7 +7,7 @@ Open-CD is an open source change detection toolbox based on a series of open sou
 
 
 ## News
-- 9/20/2022 - The code of [ChangerEx](https://github.com/likyoo/open-cd/tree/main/configs/changer) is available.
+- 9/28/2022 - The code, pre-trained models and logs of [ChangerEx](https://github.com/likyoo/open-cd/tree/main/configs/changer) are available. :yum:
 - 9/20/2022 - Our paper [Changer: Feature Interaction is What You Need for Change Detection](https://arxiv.org/abs/2209.08290) is available!
 - 7/30/2022 - Open-CD is publicly available!
 
