@@ -10,12 +10,12 @@ from mmcv.runner import BaseModule, auto_fp16
 class FeatureFusionNeck(BaseModule):
     """Feature Fusion Neck.
 
-    This neck is the implementation of
-    `SFNet <https://arxiv.org/abs/2002.10120>`_.
-
     Args:
+        policy (str): The operation to fuse features. candidates 
+            are `concat`, `sum`, `diff` and `Lp_distance`.
         in_channels (Sequence(int)): Input channels.
         channels (int): Channels after modules, before conv_seg.
+        out_indices (tuple[int]): Output from which layer.
     """
 
     def __init__(self,
