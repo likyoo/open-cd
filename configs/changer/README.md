@@ -2,6 +2,21 @@
 
 [Changer: Feature Interaction is What You Need for Change Detection](https://arxiv.org/abs/2209.08290)
 
+## Introduction
+
+[Code Snippet](https://github.com/likyoo/open-cd/blob/main/opencd/models/decode_heads/changer.py#L151)
+
+## Abstract
+
+
+```bibtex
+@article{fang2022changer,
+  title={Changer: Feature Interaction is What You Need for Change Detection},
+  author={Fang, Sheng and Li, Kaiyu and Li, Zhe},
+  journal={arXiv preprint arXiv:2209.08290},
+  year={2022}
+}
+```
 
 ## Results and models
 
@@ -25,3 +40,4 @@
 
 
 - All metrics are based on the category "change".
+- All scores are computed on the test set.
