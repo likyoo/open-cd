@@ -8,6 +8,11 @@
 
 ## Abstract
 
+<!-- [IMAGE] -->
+
+<div align=center>
+<img src="https://user-images.githubusercontent.com/44317497/192922229-9a9480c2-cb12-42e5-84e6-92ee1df1f775.png" width="90%"/>
+</div>
 
 ```bibtex
 @article{fang2022changer,
