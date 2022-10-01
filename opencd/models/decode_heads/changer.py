@@ -152,7 +152,7 @@ class Changer(BaseDecodeHead):
     """The Head of Changer.
 
     This head is the implementation of
-    `Changer <https://arxiv.org/abs/>` _.
+    `Changer <https://arxiv.org/abs/2209.08290>` _.
 
     Args:
         interpolate_mode: The interpolate mode of MLP head upsample operation.
