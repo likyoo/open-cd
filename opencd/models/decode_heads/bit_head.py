@@ -52,6 +52,7 @@ class CrossAttention(nn.Module):
         out = out.permute((0,2,1,3)).flatten(2)
         return self.fc_out(out)
 
+
 class FeedForward(nn.Sequential):
     def __init__(self, dim, hidden_dim, dropout_rate=0.):
         super().__init__(
@@ -121,6 +122,7 @@ class TransformerDecoder(nn.Module):
         x_ = self.attn(self.norm1(x),self.norm1_(ref)) + x
         y = self.ff(self.norm2(x_)) + x_
         return y
+
 
 @HEADS.register_module()
 class BITHead(BaseDecodeHead):
@@ -226,7 +228,6 @@ class BITHead(BaseDecodeHead):
 
 
         self.upsample = Upsample(scale_factor=upsample_size,mode='bilinear',align_corners=self.align_corners)
-
 
     # Token
     def _forward_semantic_tokens(self, x):

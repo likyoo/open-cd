@@ -6,8 +6,8 @@ model = dict(
     neck=dict(type='FeatureFusionNeck', policy='concat'),
     decode_head=dict(
         input_transform='resize_concat',
-        in_index=[0,1,2,3],
-        in_channels=[64,128,256,512],
+        in_index=[0, 1, 2, 3],
+        in_channels=[64, 128, 256, 512],
         num_classes=2,
         pre_upsample=1),
     auxiliary_head=dict(
