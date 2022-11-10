@@ -18,7 +18,7 @@ test_pipeline = [
     dict(
         type='MultiImgMultiScaleFlipAug',
         img_scale=(1024, 1024),
-        # img_ratios=[0.5, 0.75, 1.0, 1.25, 1.5, 1.75],
+        # img_ratios=[0.75, 1.0, 1.25],
         flip=False,
         transforms=[
             dict(type='MultiImgResize', keep_ratio=True),
