@@ -1,10 +1,17 @@
 _base_ = [
-    '../_base_/models/changer_r18.py', '../_base_/datasets/s2looking.py', 
+    '../_base_/models/changer_s50.py', '../_base_/datasets/s2looking.py', 
     '../_base_/default_runtime.py', '../_base_/schedules/schedule_20k.py'
 ]
 
 crop_size = (512, 512)
 model = dict(
+    backbone=dict(
+        interaction_cfg=(
+            None,
+            dict(type='SpatialExchange', p=1/2),
+            dict(type='ChannelExchange', p=1/2),
+            dict(type='ChannelExchange', p=1/2))
+    ),
     decode_head=dict(
         num_classes=2,
         sampler=dict(type='OHEMPixelSampler', thresh=0.7, min_kept=100000)),

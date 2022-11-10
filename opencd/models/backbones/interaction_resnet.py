@@ -1,94 +1,21 @@
 # Copyright (c) Open-CD. All rights reserved.
 import torch
 import torch.nn as nn
-from mmcv.runner import BaseModule, auto_fp16
 
 from mmseg.models.backbones import ResNet
 from mmseg.models.builder import BACKBONES
 
-
-class ChannelExchange(BaseModule):
-    """
-    channel exchange
-    Args:
-        p (int, optional): 1/p of the features will be exchanged.
-            Defaults to 2.
-    """
-    def __init__(self, p=2):
-        super(ChannelExchange, self).__init__()
-        self.p = p
-
-    def forward(self, x1, x2):
-        N, c, h, w = x1.shape
-        
-        exchange_map = torch.arange(c) % self.p == 0
-        exchange_mask = exchange_map.unsqueeze(0).expand((N, -1))
- 
-        out_x1, out_x2 = torch.zeros_like(x1), torch.zeros_like(x2)
-        out_x1[~exchange_mask, ...] = x1[~exchange_mask, ...]
-        out_x2[~exchange_mask, ...] = x2[~exchange_mask, ...]
-        out_x1[exchange_mask, ...] = x2[exchange_mask, ...]
-        out_x2[exchange_mask, ...] = x1[exchange_mask, ...]
-        
-        return out_x1, out_x2
-
-
-class SpatialExchange(BaseModule):
-    """
-    spatial exchange
-    Args:
-        p (int, optional): 1/p of the features will be exchanged.
-            Defaults to 2.
-    """
-    def __init__(self, p=2):
-        super(SpatialExchange, self).__init__()
-        self.p = p
-
-    def forward(self, x1, x2):
-        N, c, h, w = x1.shape
-        exchange_mask = torch.arange(w) % self.p == 0
- 
-        out_x1, out_x2 = torch.zeros_like(x1), torch.zeros_like(x2)
-        out_x1[..., ~exchange_mask] = x1[..., ~exchange_mask]
-        out_x2[..., ~exchange_mask] = x2[..., ~exchange_mask]
-        out_x1[..., exchange_mask] = x2[..., exchange_mask]
-        out_x2[..., exchange_mask] = x1[..., exchange_mask]
-        
-        return out_x1, out_x2
-
-
-class Aggregation_distribution(BaseModule):
-    # Aggregation_Distribution Layer (AD)
-    def __init__(self, channels, num_paths=2, attn_channels=None, act_layer=nn.ReLU, norm_layer=nn.BatchNorm2d):
-        super(Aggregation_distribution, self).__init__()
-        self.num_paths = num_paths # `2` is supported.
-        attn_channels = attn_channels or channels // 16
-        attn_channels = max(attn_channels, 8)
-        
-        self.fc_reduce = nn.Conv2d(channels, attn_channels, kernel_size=1, bias=False)
-        self.bn = norm_layer(attn_channels)
-        self.act = act_layer(inplace=True)
-        self.fc_select = nn.Conv2d(attn_channels, channels * num_paths, kernel_size=1, bias=False)
-
-    def forward(self, x1, x2):
-        x = torch.stack([x1, x2], dim=1)
-        attn = x.sum(1).mean((2, 3), keepdim=True)
-        attn = self.fc_reduce(attn)
-        attn = self.bn(attn)
-        attn = self.act(attn)
-        attn = self.fc_select(attn)
-        B, C, H, W = attn.shape
-        attn1, attn2 = attn.reshape(B, self.num_paths, C // self.num_paths, H, W).transpose(0, 1)
-        attn1 = torch.sigmoid(attn1)
-        attn2 = torch.sigmoid(attn2)
-        return x1 * attn1, x2 * attn2
-
+from opencd.models.utils import build_interaction_layer
 
 @BACKBONES.register_module()
 class IA_ResNet(ResNet):
     """Interaction ResNet backbone.
 
     Args:
+        interaction_cfg (Sequence[dict]): Interaction strategies for the stages.
+            The length should be the same as `num_stages`. The details can be 
+            found in `opencd/models/utils/interaction_layer.py`.
+            Default: (None, None, None, None).
         depth (int): Depth of resnet, from {18, 34, 50, 101, 152}.
         in_channels (int): Number of input image channels. Default: 3.
         stem_channels (int): Number of stem channels. Default: 64.
@@ -158,18 +85,21 @@ class IA_ResNet(ResNet):
         (1, 512, 2, 2)
         (1, 1024, 1, 1)
     """
-    def __init__(self, **kwargs):
+    def __init__(self, 
+                 interaction_cfg=(None, None, None, None), 
+                 **kwargs):
         super().__init__(**kwargs)
+        assert self.num_stages == len(interaction_cfg), \
+            'The length of the `interaction_cfg` should be same as the `num_stages`.'
         # cross-correlation
         self.ccs = []
-        for idx in range(self.num_stages):
-            if idx in [0, 1]:
-                self.ccs.append(SpatialExchange(p=2))
-            else:
-                self.ccs.append(ChannelExchange(p=2))
+        for ia_cfg in interaction_cfg:
+            if ia_cfg is None:
+                ia_cfg = dict(type='TwoIdentity')
+            self.ccs.append(build_interaction_layer(ia_cfg))
         self.ccs = nn.ModuleList(self.ccs)
     
-    def forward(self, x1, x2, interact_layer=[1, 2, 3]):
+    def forward(self, x1, x2):
         """Forward function."""
         def _stem_forward(x):
             if self.deep_stem:
@@ -188,8 +118,7 @@ class IA_ResNet(ResNet):
             res_layer = getattr(self, layer_name)
             x1 = res_layer(x1)
             x2 = res_layer(x2)
-            if i in interact_layer:
-                x1, x2 = self.ccs[i](x1, x2)
+            x1, x2 = self.ccs[i](x1, x2)
             if i in self.out_indices:
                 outs.append(torch.cat([x1, x2], dim=1))
         return tuple(outs)

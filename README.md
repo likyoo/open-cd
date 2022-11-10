@@ -33,14 +33,14 @@ pip install -v -e .
 ```
 train
 ```
-python tools/train.py configs/changer/changer_r18_512x512_40k_levircd.py --work-dir ./changer_r18_levir_workdir --gpu-id 0 --seed 307
+python tools/train.py configs/changer/changer_ex_r18_512x512_40k_levircd.py --work-dir ./changer_r18_levir_workdir --gpu-id 0 --seed 307
 ```
 infer
 ```
 # get .png results
-python tools/test.py configs/changer/changer_r18_512x512_40k_levircd.py  changer_r18_levir_workdir/latest.pth --format-only --eval-options "imgfile_prefix=tmp_infer"
+python tools/test.py configs/changer/changer_ex_r18_512x512_40k_levircd.py  changer_r18_levir_workdir/latest.pth --format-only --eval-options "imgfile_prefix=tmp_infer"
 # get metrics
-python tools/test.py configs/changer/changer_r18_512x512_40k_levircd.py  changer_r18_levir_workdir/latest.pth --eval mFscore
+python tools/test.py configs/changer/changer_ex_r18_512x512_40k_levircd.py  changer_r18_levir_workdir/latest.pth --eval mFscore mIoU
 ```
 
 ## Citation
