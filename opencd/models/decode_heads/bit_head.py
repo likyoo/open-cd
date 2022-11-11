@@ -2,9 +2,9 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from mmcv.cnn import ConvModule, build_activation_layer, build_norm_layer
-from mmseg.ops.wrappers import Upsample
 from mmcv.runner import Sequential,ModuleList
 
+from mmseg.ops.wrappers import Upsample
 from mmseg.models.builder import HEADS
 from mmseg.models.decode_heads.decode_head import BaseDecodeHead
 
@@ -92,6 +92,7 @@ class TransformerEncoder(nn.Module):
         y = self.ff(self.norm2(x_)) + x_
         return y
 
+
 class TransformerDecoder(nn.Module):
     def __init__(
             self,
@@ -149,7 +150,7 @@ class BITHead(BaseDecodeHead):
     """
 
     def __init__(self,
-                 in_channels=512,
+                 in_channels=256,
                  channels=32,
                  embed_dims=64,
                  enc_depth=1,
@@ -166,7 +167,7 @@ class BITHead(BaseDecodeHead):
                  norm_cfg=dict(type='LN'),
                  act_cfg=dict(type='ReLU', inplace=True),
                  **kwargs):
-        super(BITHead, self).__init__(in_channels,channels,**kwargs)
+        super(BITHead, self).__init__(in_channels, channels, **kwargs)
         self.norm_cfg = norm_cfg
         self.act_cfg = act_cfg
         self.embed_dims=embed_dims
@@ -226,7 +227,6 @@ class BITHead(BaseDecodeHead):
             )
             self.decoder.append(block)
 
-
         self.upsample = Upsample(scale_factor=upsample_size,mode='bilinear',align_corners=self.align_corners)
 
     # Token
@@ -262,7 +262,7 @@ class BITHead(BaseDecodeHead):
                 H, W) which is feature map for last layer of decoder head.
         """
         inputs = self._transform_inputs(inputs)
-        x1,x2 = torch.chunk(inputs, 2, dim=1)
+        x1, x2 = torch.chunk(inputs, 2, dim=1)
         x1 = self.pre_process(x1)
         x2 = self.pre_process(x2)
         # Tokenization
@@ -271,7 +271,7 @@ class BITHead(BaseDecodeHead):
             token2 = self._forward_semantic_tokens(x2)
         else:
             token1 = self._forward_reshaped_tokens(x1)
-            token2 = self._forwardt_reshaped_tokens(x2)
+            token2 = self._forward_reshaped_tokens(x2)
 
         # Transformer encoder forward
         token = torch.cat([token1, token2], dim=1)
