@@ -1,5 +1,5 @@
 _base_ = [
-    '../_base_/models/snunet.py', '../_base_/datasets/levir_cd.py', 
+    '../_base_/models/snunet_c16.py', '../_base_/datasets/levir_cd.py', 
     '../_base_/default_runtime.py', '../_base_/schedules/schedule_20k.py'
 ]
 
