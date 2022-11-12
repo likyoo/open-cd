@@ -38,4 +38,5 @@
 
 - All metrics are based on the category "change".
 - All scores are computed on the test set.
+- The stage4 of resnet-18 is removed.
 
