@@ -20,12 +20,12 @@ Toolbox:
 - [x] [MMSegmentation](https://github.com/open-mmlab/mmsegmentation)
 - [ ] ...
 
-Change detection models:
+Change detection model:
 
-- [x] Changer
-- [x] FC-Siam-Diff
-- [x] SNUNet
-- [x] BiT
+- [x] [Changer](configs/changer)
+- [x] [FC-Siam-Diff](configs/fcsn)
+- [x] [SNUNet](configs/snunet)
+- [x] [BiT](configs/bit)
 - [ ] ...
 
 The code of some models are borrowed directly from their official repositories.
