@@ -7,6 +7,7 @@
 [Code Snippet](https://github.com/likyoo/open-cd/blob/main/opencd/models/decode_heads/changer.py#L151)
 
 ## Abstract
+Change detection is an important tool for long-term earth observation missions. It takes bi-temporal images as input and predicts “where” the change has occurred. Different from other dense prediction tasks, a meaningful consideration for change detection is the interaction between bi-temporal features. With this motivation, in this paper we propose a novel general change detection architecture, MetaChanger, which includes a series of alternative interaction layers in the feature extractor. To verify the effectiveness of MetaChanger, we propose two derived models, ChangerAD and ChangerEx with simple interaction strategies: Aggregation-Distribution (AD) and “exchange”. AD is abstracted from some complex interaction methods, and “exchange” is a completely parameter&computation-free operation by exchanging bi-temporal features. In addition, for better alignment of bi-temporal features, we propose a Flow Dual-Alignment Fusion (FDAF) module which allows interactive alignment and feature fusion. Crucially, we observe Changer series models achieve competitive performance on different scale change detection datasets. Further, our proposed ChangerAD and ChangerEx could serve as a starting baseline for future MetaChanger design.
 
 <!-- [IMAGE] -->
 
