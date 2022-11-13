@@ -4,6 +4,8 @@
 
 ## Introduction
 
+[Official Repo](https://github.com/justchenhao/BIT_CD)
+
 [Code Snippet](https://github.com/likyoo/open-cd/blob/main/opencd/models/decode_heads/bit_head.py)
 
 ## Abstract
