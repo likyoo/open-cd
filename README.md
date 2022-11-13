@@ -13,11 +13,22 @@ Open-CD is an open source change detection toolbox based on a series of open sou
 
 ## Plan
 
-Support for
+#### Support for
+
+Toolbox:
 
 - [x] [MMSegmentation](https://github.com/open-mmlab/mmsegmentation)
 - [ ] ...
 
+Change detection models:
+
+- [x] Changer
+- [x] FC-Siam-Diff
+- [x] SNUNet
+- [x] BiT
+- [ ] ...
+
+The code of some models are borrowed directly from their official repositories.
 
 ## Usage
 
