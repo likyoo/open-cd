@@ -11,12 +11,13 @@ class ChannelExchange(BaseModule):
     """
     channel exchange
     Args:
-        p (int, optional): 1/p of the features will be exchanged.
-            Defaults to 2.
+        p (float, optional): p of the features will be exchanged.
+            Defaults to 1/2.
     """
-    def __init__(self, p=2):
+    def __init__(self, p=1/2):
         super(ChannelExchange, self).__init__()
-        self.p = p
+        assert p >= 0 and p <= 1
+        self.p = int(1/p)
 
     def forward(self, x1, x2):
         N, c, h, w = x1.shape
@@ -38,12 +39,13 @@ class SpatialExchange(BaseModule):
     """
     spatial exchange
     Args:
-        p (int, optional): 1/p of the features will be exchanged.
-            Defaults to 2.
+        p (float, optional): p of the features will be exchanged.
+            Defaults to 1/2.
     """
-    def __init__(self, p=2):
+    def __init__(self, p=1/2):
         super(SpatialExchange, self).__init__()
-        self.p = p
+        assert p >= 0 and p <= 1
+        self.p = int(1/p)
 
     def forward(self, x1, x2):
         N, c, h, w = x1.shape
