@@ -1,7 +1,7 @@
 # model settings
 norm_cfg = dict(type='SyncBN', requires_grad=True)
 model = dict(
-    type='IAEncoderDecoder',
+    type='DIEncoderDecoder',
     pretrained=None,
     backbone=dict(
         type='IA_ResNetV1c',

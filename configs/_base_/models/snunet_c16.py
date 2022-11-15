@@ -2,7 +2,7 @@
 norm_cfg = dict(type='SyncBN', requires_grad=True)
 base_channels = 16
 model = dict(
-    type='IAEncoderDecoder',
+    type='DIEncoderDecoder',
     pretrained=None,
     backbone=dict(
         type='SNUNet_ECAM',

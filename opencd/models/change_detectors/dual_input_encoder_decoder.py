@@ -11,9 +11,9 @@ from mmseg.models.segmentors.base import BaseSegmentor
 
 
 @SEGMENTORS.register_module()
-class IAEncoderDecoder(BaseSegmentor):
-    """Interaction Encoder Decoder segmentors.
-    IAEncoderDecoder typically consists of backbone, decode_head, auxiliary_head.
+class DIEncoderDecoder(BaseSegmentor):
+    """Dual Input Encoder Decoder segmentors.
+    DIEncoderDecoder typically consists of backbone, decode_head, auxiliary_head.
     Note that auxiliary_head is only used for deep supervision during training,
     which could be dumped during inference.
     """
@@ -28,7 +28,7 @@ class IAEncoderDecoder(BaseSegmentor):
                  pretrained=None,
                  init_cfg=None,
                  backbone_inchannels=3):
-        super(IAEncoderDecoder, self).__init__(init_cfg)
+        super(DIEncoderDecoder, self).__init__(init_cfg)
         if pretrained is not None:
             assert backbone.get('pretrained') is None, \
                 'both backbone and segmentor set pretrained weight'
