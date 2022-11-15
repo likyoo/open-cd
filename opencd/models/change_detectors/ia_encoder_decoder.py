@@ -26,7 +26,8 @@ class IAEncoderDecoder(BaseSegmentor):
                  train_cfg=None,
                  test_cfg=None,
                  pretrained=None,
-                 init_cfg=None):
+                 init_cfg=None,
+                 backbone_inchannels=3):
         super(IAEncoderDecoder, self).__init__(init_cfg)
         if pretrained is not None:
             assert backbone.get('pretrained') is None, \
@@ -40,6 +41,7 @@ class IAEncoderDecoder(BaseSegmentor):
 
         self.train_cfg = train_cfg
         self.test_cfg = test_cfg
+        self.backbone_inchannels = backbone_inchannels # RGB: 3
 
         assert self.with_decode_head
 
@@ -61,8 +63,7 @@ class IAEncoderDecoder(BaseSegmentor):
 
     def extract_feat(self, img):
         """Extract features from images."""
-        backbone_inchannels = 3
-        img1, img2 = torch.split(img, backbone_inchannels, dim=1)
+        img1, img2 = torch.split(img, self.backbone_inchannels, dim=1)
         x = self.backbone(img1, img2)
 
         return x

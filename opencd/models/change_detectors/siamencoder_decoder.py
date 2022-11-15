@@ -26,7 +26,8 @@ class SiamEncoderDecoder(BaseSegmentor):
                  train_cfg=None,
                  test_cfg=None,
                  pretrained=None,
-                 init_cfg=None):
+                 init_cfg=None,
+                 backbone_inchannels=3):
         super(SiamEncoderDecoder, self).__init__(init_cfg)
         if pretrained is not None:
             assert backbone.get('pretrained') is None, \
@@ -40,6 +41,7 @@ class SiamEncoderDecoder(BaseSegmentor):
 
         self.train_cfg = train_cfg
         self.test_cfg = test_cfg
+        self.backbone_inchannels = backbone_inchannels # RGB: 3
 
         assert self.with_decode_head
 
@@ -61,14 +63,14 @@ class SiamEncoderDecoder(BaseSegmentor):
 
     def extract_feat(self, img):
         """Extract features from images."""
-        backbone_inchannels = 3 # `in_channels` is not in the ATTRIBUTE for some backbone CLASS.
-        img1, img2 = torch.split(img, backbone_inchannels, dim=1)
+        # `in_channels` is not in the ATTRIBUTE for some backbone CLASS.
+        img1, img2 = torch.split(img, self.backbone_inchannels, dim=1)
         x1 = self.backbone(img1)
         x2 = self.backbone(img2)
         if self.with_neck:
             x = self.neck(x1, x2)
         else:
-            raise ValueError('`NECK` is needed for two-stream network.')
+            raise ValueError('`NECK` is needed for `SiamEncoderDecoder`.')
         
         return x
 
