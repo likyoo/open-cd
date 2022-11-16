@@ -22,10 +22,12 @@ Toolbox:
 
 Change detection model:
 
-- [x] [Changer (arXiv'2022)](configs/changer)
-- [x] [FC-Siam-Diff (ICIP'2018)](configs/fcsn)
+- [x] [FC-EF (ICIP'2018)](configs/fcsn)
+- [x] [FC-Siam-diff (ICIP'2018)](configs/fcsn)
+- [x] [FC-Siam-conc (ICIP'2018)](configs/fcsn)
 - [x] [SNUNet (GRSL'2021)](configs/snunet)
 - [x] [BiT (TGRS'2021)](configs/bit)
+- [x] [Changer (arXiv'2022)](configs/changer)
 - [ ] ...
 
 The code of some models are borrowed directly from their official repositories.
