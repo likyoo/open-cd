@@ -1,4 +1,5 @@
 # Copyright (c) Open-CD. All rights reserved.
+# This script is borrowed from MMSegmentation.
 """Modified from https://github.com/open-
 mmlab/mmdetection/blob/master/tools/analysis_tools/analyze_logs.py."""
 import argparse

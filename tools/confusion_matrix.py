@@ -1,4 +1,5 @@
 # Copyright (c) Open-CD. All rights reserved.
+# This script is borrowed from MMSegmentation.
 import argparse
 import os
 
@@ -45,7 +46,6 @@ def parse_args():
 
 def calculate_confusion_matrix(dataset, results):
     """Calculate the confusion matrix.
-
     Args:
         dataset (Dataset): Test or val dataset.
         results (list[ndarray]): A list of segmentation results in each image.
@@ -53,12 +53,15 @@ def calculate_confusion_matrix(dataset, results):
     n = len(dataset.CLASSES)
     confusion_matrix = np.zeros(shape=[n, n])
     assert len(dataset) == len(results)
+    ignore_index = dataset.ignore_index
     prog_bar = mmcv.ProgressBar(len(results))
     for idx, per_img_res in enumerate(results):
         res_segm = per_img_res
-        gt_segm = dataset.get_gt_seg_map_by_idx(idx)
+        gt_segm = dataset.get_gt_seg_map_by_idx(idx).astype(int)
+        gt_segm, res_segm = gt_segm.flatten(), res_segm.flatten()
+        to_ignore = gt_segm == ignore_index
+        gt_segm, res_segm = gt_segm[~to_ignore], res_segm[~to_ignore]
         inds = n * gt_segm + res_segm
-        inds = inds.flatten()
         mat = np.bincount(inds, minlength=n**2).reshape(n, n)
         confusion_matrix += mat
         prog_bar.update()
@@ -72,7 +75,6 @@ def plot_confusion_matrix(confusion_matrix,
                           title='Normalized Confusion Matrix',
                           color_theme='winter'):
     """Draw confusion matrix with matplotlib.
-
     Args:
         confusion_matrix (ndarray): The confusion matrix.
         labels (list[str]): List of class names.

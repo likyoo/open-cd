@@ -1,4 +1,5 @@
 # Copyright (c) Open-CD. All rights reserved.
+# This script is borrowed from MMSegmentation.
 import argparse
 import copy
 import os
@@ -17,7 +18,8 @@ from opencd import __version__
 from mmseg.apis import init_random_seed, set_random_seed, train_segmentor
 from mmseg.datasets import build_dataset
 from mmseg.models import build_segmentor
-from mmseg.utils import collect_env, get_root_logger, setup_multi_processes
+from mmseg.utils import (collect_env, get_device, get_root_logger,
+                         setup_multi_processes)
 
 
 def parse_args():
@@ -184,7 +186,8 @@ def main():
     logger.info(f'Config:\n{cfg.pretty_text}')
 
     # set random seeds
-    seed = init_random_seed(args.seed)
+    cfg.device = get_device()
+    seed = init_random_seed(args.seed, device=cfg.device)
     seed = seed + dist.get_rank() if args.diff_seed else seed
     logger.info(f'Set random seed to {seed}, '
                 f'deterministic: {args.deterministic}')

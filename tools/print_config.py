@@ -1,4 +1,5 @@
 # Copyright (c) Open-CD. All rights reserved.
+# This script is borrowed from MMSegmentation.
 import argparse
 import warnings
 

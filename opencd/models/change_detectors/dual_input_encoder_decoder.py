@@ -50,6 +50,7 @@ class DIEncoderDecoder(BaseSegmentor):
         self.decode_head = builder.build_head(decode_head)
         self.align_corners = self.decode_head.align_corners
         self.num_classes = self.decode_head.num_classes
+        self.out_channels = self.decode_head.out_channels
 
     def _init_auxiliary_head(self, auxiliary_head):
         """Initialize ``auxiliary_head``"""
@@ -65,7 +66,8 @@ class DIEncoderDecoder(BaseSegmentor):
         """Extract features from images."""
         img1, img2 = torch.split(img, self.backbone_inchannels, dim=1)
         x = self.backbone(img1, img2)
-
+        if self.with_neck:
+            x = self.neck(x)
         return x
 
     def encode_decode(self, img, img_metas):
@@ -160,10 +162,10 @@ class DIEncoderDecoder(BaseSegmentor):
         h_stride, w_stride = self.test_cfg.stride
         h_crop, w_crop = self.test_cfg.crop_size
         batch_size, _, h_img, w_img = img.size()
-        num_classes = self.num_classes
+        out_channels = self.out_channels
         h_grids = max(h_img - h_crop + h_stride - 1, 0) // h_stride + 1
         w_grids = max(w_img - w_crop + w_stride - 1, 0) // w_stride + 1
-        preds = img.new_zeros((batch_size, num_classes, h_img, w_img))
+        preds = img.new_zeros((batch_size, out_channels, h_img, w_img))
         count_mat = img.new_zeros((batch_size, 1, h_img, w_img))
         for h_idx in range(h_grids):
             for w_idx in range(w_grids):
@@ -187,6 +189,9 @@ class DIEncoderDecoder(BaseSegmentor):
                 count_mat.cpu().detach().numpy()).to(device=img.device)
         preds = preds / count_mat
         if rescale:
+            # remove padding area
+            resize_shape = img_meta[0]['img_shape'][:2]
+            preds = preds[:, :, :resize_shape[0], :resize_shape[1]]
             preds = resize(
                 preds,
                 size=img_meta[0]['ori_shape'][:2],
@@ -204,6 +209,9 @@ class DIEncoderDecoder(BaseSegmentor):
             if torch.onnx.is_in_onnx_export():
                 size = img.shape[2:]
             else:
+                # remove padding area
+                resize_shape = img_meta[0]['img_shape'][:2]
+                seg_logit = seg_logit[:, :, :resize_shape[0], :resize_shape[1]]
                 size = img_meta[0]['ori_shape'][:2]
             seg_logit = resize(
                 seg_logit,
@@ -235,7 +243,10 @@ class DIEncoderDecoder(BaseSegmentor):
             seg_logit = self.slide_inference(img, img_meta, rescale)
         else:
             seg_logit = self.whole_inference(img, img_meta, rescale)
-        output = F.softmax(seg_logit, dim=1)
+        if self.out_channels == 1:
+            output = F.sigmoid(seg_logit)
+        else:
+            output = F.softmax(seg_logit, dim=1)
         flip = img_meta[0]['flip']
         if flip:
             flip_direction = img_meta[0]['flip_direction']
@@ -250,7 +261,11 @@ class DIEncoderDecoder(BaseSegmentor):
     def simple_test(self, img, img_meta, rescale=True):
         """Simple test with single image."""
         seg_logit = self.inference(img, img_meta, rescale)
-        seg_pred = seg_logit.argmax(dim=1)
+        if self.out_channels == 1:
+            seg_pred = (seg_logit >
+                        self.decode_head.threshold).to(seg_logit).squeeze(1)
+        else:
+            seg_pred = seg_logit.argmax(dim=1)
         if torch.onnx.is_in_onnx_export():
             # our inference backend only support 4D output
             seg_pred = seg_pred.unsqueeze(0)
@@ -259,6 +274,14 @@ class DIEncoderDecoder(BaseSegmentor):
         # unravel batch dim
         seg_pred = list(seg_pred)
         return seg_pred
+
+    def simple_test_logits(self, img, img_metas, rescale=True):
+        """Test without augmentations.
+        Return numpy seg_map logits.
+        """
+        seg_logit = self.inference(img[0], img_metas[0], rescale)
+        seg_logit = seg_logit.cpu().numpy()
+        return seg_logit
 
     def aug_test(self, imgs, img_metas, rescale=True):
         """Test with augmentations.
@@ -272,8 +295,29 @@ class DIEncoderDecoder(BaseSegmentor):
             cur_seg_logit = self.inference(imgs[i], img_metas[i], rescale)
             seg_logit += cur_seg_logit
         seg_logit /= len(imgs)
-        seg_pred = seg_logit.argmax(dim=1)
+        if self.out_channels == 1:
+            seg_pred = (seg_logit >
+                        self.decode_head.threshold).to(seg_logit).squeeze(1)
+        else:
+            seg_pred = seg_logit.argmax(dim=1)
         seg_pred = seg_pred.cpu().numpy()
         # unravel batch dim
         seg_pred = list(seg_pred)
         return seg_pred
+
+    def aug_test_logits(self, img, img_metas, rescale=True):
+        """Test with augmentations.
+        Return seg_map logits. Only rescale=True is supported.
+        """
+        # aug_test rescale all imgs back to ori_shape for now
+        assert rescale
+
+        imgs = img
+        seg_logit = self.inference(imgs[0], img_metas[0], rescale)
+        for i in range(1, len(imgs)):
+            cur_seg_logit = self.inference(imgs[i], img_metas[i], rescale)
+            seg_logit += cur_seg_logit
+
+        seg_logit /= len(imgs)
+        seg_logit = seg_logit.cpu().numpy()
+        return seg_logit
