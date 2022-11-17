@@ -38,6 +38,13 @@ Change detection is an important task in remote sensing (RS) image analysis. It 
 | SNUNet |      16      |  256x256  |  40000  |    -     |   92.70   | 90.04  |  91.35   | 84.08 | [config](https://github.com/likyoo/open-cd/blob/main/configs/snunet/snunet_c16_256x256_40k_levircd.py) |          |
 
 
+### SVCD
+
+| Method | base_channel | Crop Size | Lr schd | Mem (GB) | Precision | Recall | F1-Score |  IoU  |                            config                            | download |
+| :----: | :----------: | :-------: | :-----: | :------: | :-------: | :----: | :------: | :---: | :----------------------------------------------------------: | :------: |
+| SNUNet |      16      |  256x256  |  120000  |    -     |   94.69   | 91.90  |  93.27   | 87.40 | [config](https://github.com/likyoo/open-cd/blob/main/configs/snunet/snunet_c16_256x256_120k_svcd.py) |          |
+
+
 - All metrics are based on the category "change".
 - All scores are computed on the test set.
-
+- 120000 iters ~ 100 epochs in SVCD Dataset
