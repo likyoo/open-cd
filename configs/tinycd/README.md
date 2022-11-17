@@ -30,10 +30,9 @@ In this paper, we present a lightweight and effective change detection model, ca
 
 ### LEVIR-CD
 
-| Method | Crop Size | Lr schd | Mem (GB) | Precision | Recall | F1-Score |  IoU  |                            config                            | download |
+| Method |   Backbone   | Crop Size | Lr schd | Mem (GB) | Precision | Recall | F1-Score |  IoU  |                            config                            | download |
 | :----: | :----------: | :-------: | :-----: | :------: | :-------: | :----: | :------: | :---: | :----------------------------------------------------------: | :------: |
-| TinyCD |  256x256  |  40000  |    -     |   87.77   | 93.68  |  90.63   | 82.86 | [config](https://github.com/likyoo/open-cd/blob/main/configs/tinycd/tinycd_256x256_40k_levircd.py) |          |
-
+| TinyCD | EfficientNet |  256x256  |  40000  |          |   87.77   | 93.68  |  90.63   | 82.86 | [config](https://github.com/likyoo/open-cd/blob/main/configs/tinycd/tinycd_256x256_40k_levircd.py) |          |
 
 
 - All metrics are based on the category "change".
