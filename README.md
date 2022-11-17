@@ -11,16 +11,16 @@ Open-CD is an open source change detection toolbox based on a series of open sou
 - 9/20/2022 - Our paper [Changer: Feature Interaction is What You Need for Change Detection](https://arxiv.org/abs/2209.08290) is available!
 - 7/30/2022 - Open-CD is publicly available!
 
-## Plan
+## Benchmark and model zoo
 
-#### Support for
-
-Toolbox:
+Supported toolboxes:
 
 - [x] [MMSegmentation](https://github.com/open-mmlab/mmsegmentation)
+- [x] [pytorch-image-models](https://github.com/rwightman/pytorch-image-models)
 - [ ] ...
 
-Change detection model:
+Supported change detection model:
+(_The code of some models are borrowed directly from their official repositories._)
 
 - [x] [FC-EF (ICIP'2018)](configs/fcsn)
 - [x] [FC-Siam-diff (ICIP'2018)](configs/fcsn)
@@ -30,7 +30,13 @@ Change detection model:
 - [x] [Changer (arXiv'2022)](configs/changer)
 - [ ] ...
 
-The code of some models are borrowed directly from their official repositories.
+Supported datasets:
+- [x] [LEVIR-CD](https://justchenhao.github.io/LEVIR/)
+- [x] [S2Looking](https://github.com/S2Looking/Dataset)
+- [x] [SVCD](https://drive.google.com/file/d/1GX656JqqOyBi_Ef0w65kDGVto-nHrNs9/edit)
+- [x] [DSIFN](https://github.com/GeoZcx/A-deeply-supervised-image-fusion-network-for-change-detection-in-remote-sensing-images/tree/master/dataset)
+- [x] [CLCD](https://github.com/liumency/CropLand-CD)
+- [ ] ...
 
 ## Usage
 
