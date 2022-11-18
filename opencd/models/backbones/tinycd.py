@@ -105,13 +105,13 @@ class MixingMaskAttentionBlock(Module):
 class UpMask(Module):
     def __init__(
         self,
-        up_dimension: int,
+        scale_factor: float,
         nin: int,
         nout: int,
     ):
         super().__init__()
         self._upsample = Upsample(
-            size=(up_dimension, up_dimension), mode="bilinear", align_corners=True
+            scale_factor=scale_factor, mode="bilinear", align_corners=True
         )
         self._convolution = Sequential(
             Conv2d(nin, nin, 3, 1, groups=nin, padding=1),
@@ -181,9 +181,9 @@ class TinyCD(Module):
         # Initialize Upsampling blocks:
         self._up = ModuleList(
             [
-                UpMask(64, 56, 64),
-                UpMask(128, 64, 64),
-                UpMask(256, 64, 32),
+                UpMask(2, 56, 64),
+                UpMask(2, 64, 64),
+                UpMask(2, 64, 32),
             ]
         )
 
