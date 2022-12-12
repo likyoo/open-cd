@@ -9,7 +9,7 @@ from .models import *
 from .datasets import *
 
 MMCV_MIN = '1.3.13'
-MMCV_MAX = '1.6.0'
+MMCV_MAX = '1.7.0'
 
 
 def digit_version(version_str: str, length: int = 4):
