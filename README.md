@@ -29,6 +29,7 @@ Supported change detection model:
 - [x] [STANet (RS'2020)](configs/stanet)
 - [x] [SNUNet (GRSL'2021)](configs/snunet)
 - [x] [BiT (TGRS'2021)](configs/bit)
+- [x] [ChangeFormer (IGARSS'22)](configs/changeformer)
 - [x] [TinyCD (arXiv'2022)](configs/tinycd)
 - [x] [Changer (arXiv'2022)](configs/changer)
 - [ ] ...
