@@ -19,6 +19,7 @@ model = dict(
         concat_input=False,
         num_classes=2,
         out_channels=1, # support single class
+        threshold=0.5,
         loss_decode=dict(
             type='CrossEntropyLoss', use_sigmoid=True, loss_weight=1.0)),
     # model training and testing settings
