@@ -4,12 +4,7 @@ _base_ = [
 ]
 
 crop_size = (256, 256)
-model = dict(
-    decode_head=dict(
-        num_classes=2,
-        sampler=dict(type='OHEMPixelSampler', thresh=0.7, min_kept=100000)),
-        # test_cfg=dict(mode='slide', crop_size=crop_size, stride=(crop_size[0]//2, crop_size[1]//2)),
-    )
+model = dict(decode_head=dict(num_classes=2))
 
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
