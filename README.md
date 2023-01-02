@@ -26,6 +26,7 @@ Supported change detection model:
 - [x] [FC-EF (ICIP'2018)](configs/fcsn)
 - [x] [FC-Siam-diff (ICIP'2018)](configs/fcsn)
 - [x] [FC-Siam-conc (ICIP'2018)](configs/fcsn)
+- [x] [STANet (RS'2020)](configs/stanet)
 - [x] [SNUNet (GRSL'2021)](configs/snunet)
 - [x] [BiT (TGRS'2021)](configs/bit)
 - [x] [TinyCD (arXiv'2022)](configs/tinycd)
