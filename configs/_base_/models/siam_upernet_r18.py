@@ -14,9 +14,10 @@ model = dict(
         norm_eval=False,
         style='pytorch',
         contract_dilation=True),
+    neck=dict(type='FeatureFusionNeck', policy='concat'),
     decode_head=dict(
         type='UPerHead',
-        in_channels=[64, 128, 256, 512],
+        in_channels=[v * 2 for v in [64, 128, 256, 512]],
         in_index=[0, 1, 2, 3],
         pool_scales=(1, 2, 3, 6),
         channels=128,
@@ -28,7 +29,7 @@ model = dict(
             type='CrossEntropyLoss', use_sigmoid=False, loss_weight=1.0)),
     auxiliary_head=dict(
         type='FCNHead',
-        in_channels=256,
+        in_channels=256 * 2,
         in_index=2,
         channels=64,
         num_convs=1,
