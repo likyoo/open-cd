@@ -25,3 +25,17 @@ This paper presents three fully convolutional neural network architectures which
   organization={IEEE}
 }
 ```
+
+## Results and models
+
+### LEVIR-CD
+
+|    Method    | Crop Size | Lr schd | Mem (GB) | Precision | Recall | F1-Score |  IoU  |                            config                            | download |
+| :----------: | :-------: | :-----: | :------: | :-------: | :----: | :------: | :---: | :----------------------------------------------------------: | :------: |
+|    FC-EF     |  256x256  |  40000  |    -     |   87.47   | 84.28  |  85.84   | 75.20 | [config](https://github.com/likyoo/open-cd/blob/main/configs/fcsn/fc_ef_256x256_40k_levircd.py) |          |
+| FC-Siam-Diff |  256x256  |  40000  |    -     |   91.14   | 83.78  |  87.31   | 77.47 | [config](https://github.com/likyoo/open-cd/blob/main/configs/fcsn/fc_siam_diff_256x256_40k_levircd.py) |          |
+| FC-Siam-Conc |  256x256  |  40000  |    -     |   88.08   | 88.95  |  88.51   | 79.39 | [config](https://github.com/likyoo/open-cd/blob/main/configs/fcsn/fc_siam_conc_256x256_40k_levircd.py) |          |
+
+
+- All metrics are based on the category "change".
+- All scores are computed on the test set.

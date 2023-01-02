@@ -1,5 +1,5 @@
 _base_ = [
-    '../_base_/models/fc_siam_diff.py', '../_base_/datasets/levir_cd.py', 
+    '../_base_/models/fc_ef.py', '../_base_/datasets/levir_cd.py', 
     '../_base_/default_runtime.py', '../_base_/schedules/schedule_20k.py'
 ]
 
@@ -46,8 +46,8 @@ data = dict(
         ann_dir='train/label',
         pipeline=train_pipeline),
     val=dict(
-        img_dir='val',
-        ann_dir='val/label',
+        img_dir='test',
+        ann_dir='test/label',
         pipeline=test_pipeline),
     test=dict(
         img_dir='test',
