@@ -385,6 +385,7 @@ class STAHead(BaseDecodeHead):
             Tensor: Output segmentation map.
         """
         seg_logits = self.forward(inputs)
+        # adapt `sigmoid` in post-processing
         seg_logits[seg_logits > self.distance_threshold] = 100
         seg_logits[seg_logits <= self.distance_threshold] = -100
         return seg_logits
