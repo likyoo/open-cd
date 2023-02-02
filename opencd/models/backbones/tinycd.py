@@ -188,7 +188,7 @@ class TinyCD(Module):
         )
 
         # Final classification layer:
-        self._classify = PixelwiseLinear([32, 16], [16, 8], None) # out_channels = 8
+        self._classify = PixelwiseLinear([32, 16], [16, 1], None) # out_channels = 8
 
     def forward(self, x1: Tensor, x2: Tensor) -> Tensor:
         features = self._encode(x1, x2)
