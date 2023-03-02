@@ -1,4 +1,4 @@
-_base_ = ['./tinycd_v2_256x256_40k_levircd.py']
+_base_ = ['./tinycd_v2_b_256x256_40k_levircd.py']
 
 model = dict(
     backbone=dict(
