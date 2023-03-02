@@ -33,6 +33,7 @@ Supported change detection model:
 - [x] [ChangeFormer (IGARSS'22)](configs/changeformer)
 - [x] [TinyCD (arXiv'2022)](configs/tinycd)
 - [x] [Changer (arXiv'2022)](configs/changer)
+- [x] [TinyCDv2](configs/tinycd_v2)
 - [ ] ...
 
 Supported datasets:
