@@ -7,6 +7,7 @@ Open-CD is an open source change detection toolbox based on a series of open sou
 
 
 ## News
+- 3/14/2023 - Open-CD is upgraded to v0.0.3. Semantic Change Detection (SCD) is supported !
 - 11/17/2022 - Open-CD is upgraded to v0.0.2, requiring a higher version of the MMSegmentation dependency.
 - 9/28/2022 - The code, pre-trained models and logs of [ChangerEx](https://github.com/likyoo/open-cd/tree/main/configs/changer) are available. :yum:
 - 9/20/2022 - Our paper [Changer: Feature Interaction is What You Need for Change Detection](https://arxiv.org/abs/2209.08290) is available!
@@ -36,13 +37,16 @@ Supported change detection model:
 - [x] [TinyCDv2](configs/tinycd_v2)
 - [ ] ...
 
-Supported datasets:
+Supported datasets: | [Descriptions](https://github.com/wenhwu/awesome-remote-sensing-change-detection)
 - [x] [LEVIR-CD](https://justchenhao.github.io/LEVIR/)
 - [x] [S2Looking](https://github.com/S2Looking/Dataset)
 - [x] [SVCD](https://drive.google.com/file/d/1GX656JqqOyBi_Ef0w65kDGVto-nHrNs9/edit)
 - [x] [DSIFN](https://github.com/GeoZcx/A-deeply-supervised-image-fusion-network-for-change-detection-in-remote-sensing-images/tree/master/dataset)
 - [x] [CLCD](https://github.com/liumency/CropLand-CD)
 - [x] [RSIPAC](https://engine.piesat.cn/ai/autolearning/index.html#/dataset/detail?key=8f6c7645-e60f-42ce-9af3-2c66e95cfa27)
+- [x] [SECOND](http://www.captain-whu.com/PROJECT/)
+- [x] [Landsat](https://figshare.com/articles/figure/Landsat-SCD_dataset_zip/19946135/1)
+- [ ] [BANDON](https://github.com/fitzpchao/BANDON)
 - [ ] ...
 
 ## Usage
@@ -82,20 +86,9 @@ If you find this project useful in your research, please consider cite:
   archivePrefix={arXiv},
   primaryClass={cs.CV}
 }
-
-@misc{opencd2022,
-    title={{Open-CD}: An open source change detection toolbox},
-    author={Open-CD Contributors},
-    howpublished = {\url{https://github.com/likyoo/open-cd}},
-    year={2022}
-}
 ```
 
 ## License
 
 Open-CD is released under the Apache 2.0 license.
-
-
-----
-**The inspiration for this project comes from a casual conversation with friends during my internship at Sensetime.**
 

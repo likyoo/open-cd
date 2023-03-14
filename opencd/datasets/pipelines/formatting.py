@@ -151,6 +151,16 @@ class MultiImgDefaultFormatBundle(object):
                 to_tensor(results['gt_semantic_seg'][None,
                                                      ...].astype(np.int64)),
                 stack=True)
+        if 'gt_semantic_seg_from' in results:
+            results['gt_semantic_seg_from'] = DC(
+                to_tensor(results['gt_semantic_seg_from'][None,
+                                                     ...].astype(np.int64)),
+                stack=True)
+        if 'gt_semantic_seg_to' in results:
+            results['gt_semantic_seg_to'] = DC(
+                to_tensor(results['gt_semantic_seg_to'][None,
+                                                     ...].astype(np.int64)),
+                stack=True)
         return results
 
     def __repr__(self):

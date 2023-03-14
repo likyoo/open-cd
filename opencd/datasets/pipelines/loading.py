@@ -172,3 +172,108 @@ class MultiImgLoadAnnotations(object):
         repr_str += f'(reduce_zero_label={self.reduce_zero_label},'
         repr_str += f"imdecode_backend='{self.imdecode_backend}')"
         return repr_str
+
+
+@PIPELINES.register_module()
+class MultiImgMultiAnnLoadAnnotations(object):
+    """Load annotations for semantic change detection.
+
+    Args:
+        reduce_zero_label (bool): Whether reduce all label value by 1.
+            Usually used for datasets where 0 is background label.
+            Default: False.
+        file_client_args (dict): Arguments to instantiate a FileClient.
+            See :class:`mmcv.fileio.FileClient` for details.
+            Defaults to ``dict(backend='disk')``.
+        imdecode_backend (str): Backend for :func:`mmcv.imdecode`. Default:
+            'pillow'
+    """
+
+    def __init__(self,
+                 reduce_semantic_zero_label=False,
+                 file_client_args=dict(backend='disk'),
+                 imdecode_backend='pillow'):
+        self.reduce_semantic_zero_label = reduce_semantic_zero_label
+        self.file_client_args = file_client_args.copy()
+        self.file_client = None
+        self.imdecode_backend = imdecode_backend
+
+    def __call__(self, results):
+        """Call function to load multiple types annotations.
+
+        Args:
+            results (dict): Result dict from :obj:`opencd.CDDataset`. 
+
+        Returns:
+            dict: The dict contains loaded semantic segmentation annotations.
+        """
+
+        if self.file_client is None:
+            self.file_client = mmcv.FileClient(**self.file_client_args)
+
+        if results.get('seg_prefix', None) is not None:
+            binary_filename = osp.join(results['seg_prefix']['binary_dir'],
+                                results['ann_info']['seg_map'])
+            semantic_filename_from = osp.join(results['seg_prefix']['semantic_dir_from'],
+                                results['ann_info']['seg_map'])
+            semantic_filename_to = osp.join(results['seg_prefix']['semantic_dir_to'],
+                                results['ann_info']['seg_map'])
+        else:
+            assert NotImplementedError
+        # for binary change ann
+        binary_img_bytes = self.file_client.get(binary_filename)
+        gt_semantic_seg = mmcv.imfrombytes(
+            binary_img_bytes, flag='grayscale',
+            backend=self.imdecode_backend).squeeze().astype(np.uint8)
+        # for semantic anns
+        semantic_img_bytes_from = self.file_client.get(semantic_filename_from)
+        gt_semantic_seg_from = mmcv.imfrombytes(
+            semantic_img_bytes_from, flag='grayscale', # in mmseg: unchanged
+            backend=self.imdecode_backend).squeeze().astype(np.uint8)
+        semantic_img_bytes_to = self.file_client.get(semantic_filename_to)
+        gt_semantic_seg_to = mmcv.imfrombytes(
+            semantic_img_bytes_to, flag='grayscale', # in mmseg: unchanged
+            backend=self.imdecode_backend).squeeze().astype(np.uint8)
+        
+        # modify to format ann
+        if results.get('format_ann', None) is not None:
+            if results['format_ann'] == 'binary':
+                gt_semantic_seg_copy = gt_semantic_seg.copy()
+                gt_semantic_seg[gt_semantic_seg_copy < 128] = 0
+                gt_semantic_seg[gt_semantic_seg_copy >= 128] = 1
+            else:
+                raise ValueError('Invalid value {}'.format(results['format_ann']))
+        # modify if custom classes
+        if results.get('label_map', None) is not None:
+            ''' Just for semantic anns here '''
+            # Add deep copy to solve bug of repeatedly
+            # replace `gt_semantic_seg`, which is reported in
+            # https://github.com/open-mmlab/mmsegmentation/pull/1445/
+            gt_semantic_seg_from_copy = gt_semantic_seg_from.copy()
+            for old_id, new_id in results['label_map'].items():
+                gt_semantic_seg_from[gt_semantic_seg_from_copy == old_id] = new_id
+            gt_semantic_seg_to_copy = gt_semantic_seg_to.copy()
+            for old_id, new_id in results['label_map'].items():
+                gt_semantic_seg_to[gt_semantic_seg_to_copy == old_id] = new_id
+        # reduce zero_label
+        if self.reduce_semantic_zero_label:
+            ''' Just for semantic anns here '''
+            # avoid using underflow conversion
+            gt_semantic_seg_from[gt_semantic_seg_from == 0] = 255
+            gt_semantic_seg_from = gt_semantic_seg_from - 1
+            gt_semantic_seg_from[gt_semantic_seg_from == 254] = 255
+            gt_semantic_seg_to[gt_semantic_seg_to == 0] = 255
+            gt_semantic_seg_to = gt_semantic_seg_to - 1
+            gt_semantic_seg_to[gt_semantic_seg_to == 254] = 255
+        results['gt_semantic_seg'] = gt_semantic_seg
+        results['gt_semantic_seg_from'] = gt_semantic_seg_from
+        results['gt_semantic_seg_to'] = gt_semantic_seg_to
+        results['seg_fields'].extend(['gt_semantic_seg', 
+            'gt_semantic_seg_from', 'gt_semantic_seg_to'])
+        return results
+
+    def __repr__(self):
+        repr_str = self.__class__.__name__
+        repr_str += f'(reduce_semantic_zero_label={self.reduce_semantic_zero_label},'
+        repr_str += f"imdecode_backend='{self.imdecode_backend}')"
+        return repr_str
