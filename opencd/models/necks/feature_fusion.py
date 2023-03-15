@@ -44,7 +44,7 @@ class FeatureFusionNeck(BaseModule):
             x = x1 + x2
         elif policy == 'diff':
             x = x2 - x1
-        elif policy == 'Lp_distance':
+        elif policy == 'abs_diff':
             x = torch.abs(x1 - x2)
 
         return x
