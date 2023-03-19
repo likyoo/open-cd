@@ -28,14 +28,15 @@ class MultiHeadDecoder(BaseModule):
 
     def __init__(self,
                  binary_cd_head,
-                 binary_cd_neck,
+                 binary_cd_neck=None,
                  semantic_cd_head=None,
                  semantic_cd_head_aux=None,
                  init_cfg=None):
         super(MultiHeadDecoder, self).__init__(init_cfg)
         self.binary_cd_head = builder.build_head(binary_cd_head)
-        self.binary_cd_neck = builder.build_neck(binary_cd_neck)
         self.siamese_semantic_head = True
+        if binary_cd_neck is not None:
+            self.binary_cd_neck = builder.build_neck(binary_cd_neck)
         if semantic_cd_head is not None:
             self.semantic_cd_head = builder.build_head(semantic_cd_head)
             if semantic_cd_head_aux is not None:

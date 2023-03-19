@@ -1066,7 +1066,11 @@ class MultiImgAlbu(object):
         transforms (list[dict]): A list of albu transformations
         keymap (dict): Contains {'input key':'albumentation-style key'}
     """
-    def __init__(self, transforms, keymap=None, update_pad_shape=False):
+    def __init__(self, 
+                 transforms, 
+                 keymap=None, 
+                 update_pad_shape=False,
+                 additional_targets=None):
         # Args will be modified later, copying it will be safer
         transforms = copy.deepcopy(transforms)
         if keymap is not None:
@@ -1074,8 +1078,10 @@ class MultiImgAlbu(object):
         self.transforms = transforms
         self.filter_lost_elements = False
         self.update_pad_shape = update_pad_shape
+        self.additional_targets = additional_targets
         
-        self.aug = Compose([self.albu_builder(t) for t in self.transforms])
+        self.aug = Compose([self.albu_builder(t) for t in self.transforms], \
+                           additional_targets=self.additional_targets)
 
         if not keymap:
             self.keymap_to_albu = {'img': 'image', 'gt_semantic_seg': 'mask'}
