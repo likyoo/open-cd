@@ -17,7 +17,6 @@ class DSIFN_Dataset(CDDataset):
             sub_dir_1='t1',
             sub_dir_2='t2',
             img_suffix='.jpg',
-            seg_map_suffix='.png', # '.png' in train/val, and '.tif' in test.
             classes=('unchanged', 'changed'),
             palette=[[255, 255, 255], [0, 0, 0]],
             **kwargs)
