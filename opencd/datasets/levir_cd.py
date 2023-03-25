@@ -20,9 +20,8 @@ class LEVIR_CD_Dataset(CDDataset):
             seg_map_suffix='.png',
             classes=('unchanged', 'changed'),
             palette=[[0, 0, 0], [255, 255, 255]],
+            format_ann='binary',
             **kwargs)
-        
-        self.format_ann = 'binary'
 
     def results2img(self, results, imgfile_prefix, indices=None):
         """Write the segmentation results to images.

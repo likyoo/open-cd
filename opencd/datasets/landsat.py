@@ -46,7 +46,8 @@ class Landsat_Dataset(SCDDataset):
             list[str: str]: result txt files which contains corresponding
             semantic segmentation images.
         """
-        palette = np.array(self.SEMANTIC_PALETTE)
+        palette = np.array(self.PALETTE) if mode == 'binary' \
+            else np.array(self.SEMANTIC_PALETTE)
         assert palette.shape[1] == 3
         assert len(palette.shape) == 2
 
@@ -59,13 +60,10 @@ class Landsat_Dataset(SCDDataset):
 
             png_filename = osp.join(imgfile_prefix, f'{basename}.png')
 
-            if mode == 'semantic':
-                color_seg = np.zeros((result.shape[0], result.shape[1], 3), dtype=np.uint8)
-                for idx, color in enumerate(palette):
-                    color_seg[result == idx, :] = color
+            color_seg = np.zeros((result.shape[0], result.shape[1], 3), dtype=np.uint8)
+            for idx, color in enumerate(palette):
+                color_seg[result == idx, :] = color
 
-            elif mode == 'binary':
-                color_seg = result * 255 # for binary change detection
             output = Image.fromarray(color_seg.astype(np.uint8))
             output.save(png_filename)
             result_files.append(png_filename)

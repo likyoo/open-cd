@@ -75,6 +75,8 @@ class SCDDataset(CDDataset):
             The palette of segmentation map. If None is given, and
             self.PALETTE is None, random palette will be generated.
             Default: None
+        format_ann (str): If `format_ann`='binary', the binary change detection
+            label will be formatted as 0 (<128) or 1 (>=128). Default: None
         gt_seg_map_loader_cfg (dict, optional): build MultiImgLoadAnnotations 
             to load gt for evaluation, load from disk by default. Default: None.
         file_client_args (dict): Arguments to instantiate a FileClient.
@@ -108,6 +110,7 @@ class SCDDataset(CDDataset):
         palette=None,
         semantic_classes=None,
         semantic_palette=None,
+        format_ann=None,
         gt_seg_map_loader_cfg=None,
         file_client_args=dict(backend='disk')):
         self.pipeline = Compose(pipeline)
@@ -130,7 +133,7 @@ class SCDDataset(CDDataset):
         # CUDA error: an illegal memory access was encountered".
         # The `format_ann='binary'` will take effect when
         # building `MultiImgLoadAnnotations` PIPELINES.
-        self.format_ann = None
+        self.format_ann = format_ann
         self.CLASSES, self.PALETTE = self.get_binary_classes_and_palette(
             classes, palette)
         self.SEMANTIC_CLASSES, self.SEMANTIC_PALETTE = self.get_semantic_classes_and_palette(

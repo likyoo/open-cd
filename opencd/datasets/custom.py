@@ -7,13 +7,11 @@ import mmcv
 import numpy as np
 from mmcv.utils import print_log
 from prettytable import PrettyTable
-from pyparsing import restOfLine
-from pytest import Item
 from torch.utils.data import Dataset
 
 from mmseg.core import eval_metrics, intersect_and_union, pre_eval_to_metrics
 from mmseg.utils import get_root_logger
-from mmseg.datasets import CustomDataset, DATASETS
+from mmseg.datasets import DATASETS
 from mmseg.datasets.pipelines import Compose
 from opencd.datasets.pipelines import MultiImgLoadAnnotations
 
@@ -67,6 +65,8 @@ class CDDataset(Dataset):
             The palette of segmentation map. If None is given, and
             self.PALETTE is None, random palette will be generated.
             Default: None
+        format_ann (str): If `format_ann`='binary', the binary change detection
+            label will be formatted as 0 (<128) or 1 (>=128). Default: None
         gt_seg_map_loader_cfg (dict, optional): build MultiImgLoadAnnotations 
             to load gt for evaluation, load from disk by default. Default: None.
         file_client_args (dict): Arguments to instantiate a FileClient.
@@ -93,6 +93,7 @@ class CDDataset(Dataset):
                  reduce_zero_label=False,
                  classes=None,
                  palette=None,
+                 format_ann=None,
                  gt_seg_map_loader_cfg=None,
                  file_client_args=dict(backend='disk')):
         self.pipeline = Compose(pipeline)
@@ -113,7 +114,7 @@ class CDDataset(Dataset):
         # CUDA error: an illegal memory access was encountered".
         # The `format_ann='binary'` will take effect when 
         # building `MultiImgLoadAnnotations` PIPELINES.
-        self.format_ann = None
+        self.format_ann = format_ann
         self.CLASSES, self.PALETTE = self.get_classes_and_palette(
             classes, palette)
         self.gt_seg_map_loader = MultiImgLoadAnnotations(
