@@ -55,8 +55,13 @@ class MultiImgLoadImageFromFile(object):
 
         if results.get('img_prefix') is not None:
             if isinstance(results['img_prefix'], list):
-                filenames = [osp.join(ip, results['img_info']['filename'])
-                            for ip in results['img_prefix']]
+                if isinstance( results['img_info']['filename'], list):
+                    filenames = [osp.join(ip, fn)
+                            for ip, fn in zip(results['img_prefix'], \
+                                              results['img_info']['filename'])]
+                else:
+                    filenames = [osp.join(ip, results['img_info']['filename'])
+                                for ip in results['img_prefix']]
             else:
                 filenames = [osp.join(results['img_prefix'],
                                      results['img_info']['filename'])]
@@ -212,12 +217,20 @@ class MultiImgMultiAnnLoadAnnotations(object):
             self.file_client = mmcv.FileClient(**self.file_client_args)
 
         if results.get('seg_prefix', None) is not None:
-            binary_filename = osp.join(results['seg_prefix']['binary_dir'],
-                                results['ann_info']['seg_map'])
-            semantic_filename_from = osp.join(results['seg_prefix']['semantic_dir_from'],
-                                results['ann_info']['seg_map'])
-            semantic_filename_to = osp.join(results['seg_prefix']['semantic_dir_to'],
-                                results['ann_info']['seg_map'])
+            if isinstance(results['ann_info']['seg_map'], list):
+                binary_, semantic_from_, semantic_to_ = results['ann_info']['seg_map']
+                binary_filename = osp.join(results['seg_prefix']['binary_dir'], binary_)
+                semantic_filename_from = osp.join(results['seg_prefix']['semantic_dir_from'],
+                                    semantic_from_)
+                semantic_filename_to = osp.join(results['seg_prefix']['semantic_dir_to'],
+                                    semantic_to_)
+            else:
+                binary_filename = osp.join(results['seg_prefix']['binary_dir'],
+                                    results['ann_info']['seg_map'])
+                semantic_filename_from = osp.join(results['seg_prefix']['semantic_dir_from'],
+                                    results['ann_info']['seg_map'])
+                semantic_filename_to = osp.join(results['seg_prefix']['semantic_dir_to'],
+                                    results['ann_info']['seg_map'])
         else:
             assert NotImplementedError
         # for binary change ann
