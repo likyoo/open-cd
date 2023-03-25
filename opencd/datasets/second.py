@@ -28,7 +28,7 @@ class SECOND_Dataset(SCDDataset):
             img_suffix='.png',
             seg_map_suffix='.png',
             classes=('unchanged', 'changed'),
-            palette=[[255, 255, 255], [0, 0, 0]],
+            palette=[[0, 0, 0], [255, 255, 255]],
             reduce_semantic_zero_label=False, # Zero label is needed for evaluation
             inverse_semantic_zero_pred=True, # Inverse zero pred is needed for evaluation
             **kwargs)

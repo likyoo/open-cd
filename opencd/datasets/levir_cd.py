@@ -19,7 +19,7 @@ class LEVIR_CD_Dataset(CDDataset):
             img_suffix='.png',
             seg_map_suffix='.png',
             classes=('unchanged', 'changed'),
-            palette=[[255, 255, 255], [0, 0, 0]],
+            palette=[[0, 0, 0], [255, 255, 255]],
             **kwargs)
         
         self.format_ann = 'binary'
@@ -39,6 +39,9 @@ class LEVIR_CD_Dataset(CDDataset):
             list[str: str]: result txt files which contains corresponding
             semantic segmentation images.
         """
+        palette = np.array(self.PALETTE)
+        assert palette.shape[1] == 3
+        assert len(palette.shape) == 2
 
         mmcv.mkdir_or_exist(imgfile_prefix)
         result_files = []
@@ -49,9 +52,11 @@ class LEVIR_CD_Dataset(CDDataset):
 
             png_filename = osp.join(imgfile_prefix, f'{basename}.png')
 
-            # The  index range of official requirement is from 0 to 6.
-            result = result * 255 # for binary change detection
-            output = Image.fromarray(result.astype(np.uint8))
+            color_seg = np.zeros((result.shape[0], result.shape[1], 3), dtype=np.uint8)
+            for idx, color in enumerate(palette):
+                color_seg[result == idx, :] = color
+
+            output = Image.fromarray(color_seg.astype(np.uint8))
             output.save(png_filename)
             result_files.append(png_filename)
 

@@ -145,8 +145,10 @@ class SiamEncoderMultiDecoder(BaseSegmentor):
                 'filename', 'ori_shape', 'pad_shape', and 'img_norm_cfg'.
                 For details on the values of these keys see
                 `mmseg/datasets/pipelines/formatting.py:Collect`.
-            gt_semantic_seg (Tensor): Semantic segmentation masks
-                used if the architecture supports semantic segmentation task.
+            gt_semantic_seg (Tensor): Binary change detection masks
+                used if the architecture supports binary change detction task.
+            gt_semantic_seg_from/to (Tensor): Semantic change detection masks
+                used if the architecture supports semantic change detction task.
         Returns:
             dict[str, Tensor]: a dictionary of loss components
         """
