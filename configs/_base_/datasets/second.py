@@ -3,12 +3,21 @@ dataset_type = 'SECOND_Dataset'
 data_root = 'data/SECOND'
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
-crop_size = (512, 512)
+crop_size = (256, 512)
 train_pipeline = [
     dict(type='MultiImgLoadImageFromFile'),
     dict(type='MultiImgMultiAnnLoadAnnotations', reduce_semantic_zero_label=True), # Zero label should be ignored when training semantic branches
+    dict(type='MultiImgRandomRotate', prob=0.5, degree=180),
     dict(type='MultiImgRandomCrop', crop_size=crop_size),
-    dict(type='MultiImgRandomFlip', prob=0.5),
+    dict(type='MultiImgRandomFlip', prob=0.5, direction='horizontal'),
+    dict(type='MultiImgRandomFlip', prob=0.5, direction='vertical'),
+    dict(type='MultiImgExchangeTime', prob=0.5),
+    dict(
+        type='MultiImgPhotoMetricDistortion',
+        brightness_delta=10,
+        contrast_range=(0.8, 1.2),
+        saturation_range=(0.8, 1.2),
+        hue_delta=10),
     dict(type='MultiImgNormalize', **img_norm_cfg),
     dict(type='MultiImgDefaultFormatBundle'),
     dict(type='Collect', keys=['img', 'gt_semantic_seg', 

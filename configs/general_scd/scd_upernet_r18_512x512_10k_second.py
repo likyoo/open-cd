@@ -8,7 +8,10 @@ optimizer = dict(
     type='AdamW',
     lr=0.0005,
     betas=(0.9, 0.999),
-    weight_decay=0.05)
+    weight_decay=0.05,
+    paramwise_cfg = dict(
+        custom_keys={
+            'head': dict(lr_mult=10.)}))
 
 log_config = dict(
     interval=50,
@@ -17,5 +20,7 @@ log_config = dict(
         dict(type='TensorboardLoggerHook')
     ])
 
-evaluation = dict(_delete_=True, interval=2000, metric=['mFscore', 'mIoU'], pre_eval=True, save_best='semantic.mSCD_Score', greater_keys=['mSCD_Score'])
+runner = dict(type='IterBasedRunner', max_iters=10000)
+checkpoint_config = dict(by_epoch=False, interval=1000)
+evaluation = dict(_delete_=True, interval=1000, metric=['mFscore', 'mIoU'], pre_eval=True, save_best='semantic.mSCD_Score', greater_keys=['mSCD_Score'])
 
