@@ -181,7 +181,7 @@ class BITHead(BaseDecodeHead):
         else:
             self.token_len = token_len
             self.conv_att = ConvModule(
-                32,
+                self.channels,
                 self.token_len,
                 1,
                 conv_cfg=self.conv_cfg,
