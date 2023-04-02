@@ -118,7 +118,7 @@ class BANDON_Dataset(SCDDataset):
         return result_files
     
     def format_results(self, results, imgfile_prefix, indices=None):
-        """Format the results into dir (standard format for LoveDA evaluation).
+        """Format the results into dir.
         Args:
             results (list): Testing results of the dataset.
             imgfile_prefix (str): The prefix of images files. It
