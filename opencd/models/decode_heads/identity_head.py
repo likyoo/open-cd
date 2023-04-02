@@ -16,12 +16,13 @@ class IdentityHead(BaseDecodeHead):
 
     def __init__(self, **kwargs):
         super(IdentityHead, self).__init__(channels=1, **kwargs)
-        self.conv_seg = nn.Identity()
+        delattr(self, 'conv_seg')
+    
+    def init_weights(self):
+        pass
 
     def _forward_feature(self, inputs):
-        """Forward function for feature maps before classifying each pixel with
-        ``self.cls_seg`` fc.
-
+        """
         Args:
             inputs (list[Tensor]): List of multi-level img features.
 
@@ -44,12 +45,13 @@ class DSIdentityHead(BaseDecodeHead):
 
     def __init__(self, **kwargs):
         super(DSIdentityHead, self).__init__(channels=1, **kwargs)
-        self.conv_seg = nn.Identity()
+        delattr(self, 'conv_seg')
+    
+    def init_weights(self):
+        pass
 
     def _forward_feature(self, inputs):
-        """Forward function for feature maps before classifying each pixel with
-        ``self.cls_seg`` fc.
-
+        """
         Args:
             inputs (list[Tensor]): List of multi-level img features.
 
