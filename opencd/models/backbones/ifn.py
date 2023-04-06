@@ -2,12 +2,6 @@
 
 import torch
 import torch.nn as nn
-from torchvision.models import vgg16
-
-from mmseg.models.builder import BACKBONES
-
-import torch
-import torch.nn as nn
 import torch.nn.functional as F
 from torchvision.models import vgg16
 
