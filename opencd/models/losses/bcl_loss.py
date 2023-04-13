@@ -24,7 +24,7 @@ def bcl_loss(
     return loss
 
 
-@LOSSES.register_module
+@LOSSES.register_module()
 class BCLLoss(nn.Module):
     """Batch-balanced Contrastive Loss"""
 
