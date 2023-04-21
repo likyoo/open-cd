@@ -3,16 +3,16 @@ import torch
 import torch.nn as nn
 from mmcv.cnn import ConvModule
 
-from mmseg.ops import resize
-from mmseg.models.builder import HEADS
 from mmseg.models.decode_heads.decode_head import BaseDecodeHead
+from mmseg.models.utils import resize
+from opencd.registry import MODELS
 
 
-@HEADS.register_module()
+@MODELS.register_module()
 class TinyHead(BaseDecodeHead):
     """
-    This head is the implementation of `Semantic FPN
-    <https://arxiv.org/abs/1901.02446>`_.
+    This head is the implementation of `TinyCDv2
+    <https://arxiv.org/abs/>`_.
     Args:
         feature_strides (tuple[int]): The strides for input feature maps.
             stack_lateral. All strides suppose to be power of 2. The first
@@ -22,8 +22,7 @@ class TinyHead(BaseDecodeHead):
     """
 
     def __init__(self, feature_strides, priori_attn=False, **kwargs):
-        super(TinyHead, self).__init__(
-            input_transform='multiple_select', **kwargs)
+        super().__init__(input_transform='multiple_select', **kwargs)
         assert len(feature_strides) == len(self.in_channels)
         assert min(feature_strides) == feature_strides[0]
         if priori_attn:

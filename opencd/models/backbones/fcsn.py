@@ -15,10 +15,10 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.nn.modules.padding import ReplicationPad2d
 
-from mmseg.models.builder import BACKBONES
+from opencd.registry import MODELS
 
 
-@BACKBONES.register_module()
+@MODELS.register_module()
 class FC_EF(nn.Module):
     """FC_EF segmentation network."""
 
@@ -160,7 +160,7 @@ class FC_EF(nn.Module):
         return (x11d,)
 
 
-@BACKBONES.register_module()
+@MODELS.register_module()
 class FC_Siam_diff(nn.Module):
     """FC_Siam_diff segmentation network."""
 
@@ -324,7 +324,7 @@ class FC_Siam_diff(nn.Module):
         return (x11d,)
 
 
-@BACKBONES.register_module()
+@MODELS.register_module()
 class FC_Siam_conc(nn.Module):
     """FC_Siam_conc segmentation network."""
 

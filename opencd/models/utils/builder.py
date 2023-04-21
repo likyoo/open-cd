@@ -1,7 +1,11 @@
-from mmcv.utils import Registry, build_from_cfg
+import warnings
 
-ITERACTION_LAYERS = Registry('interaction layer')
+from opencd.registry import MODELS
 
-def build_interaction_layer(cfg, default_args=None):
-    """Builder for Interaction layer."""
-    return build_from_cfg(cfg, ITERACTION_LAYERS, default_args)
+ITERACTION_LAYERS = MODELS
+
+def build_interaction_layer(cfg):
+    """Build backbone."""
+    warnings.warn('``build_interaction_layer`` would be deprecated soon, please use '
+                  '``opencd.registry.MODELS.build()`` ')
+    return ITERACTION_LAYERS.build(cfg)

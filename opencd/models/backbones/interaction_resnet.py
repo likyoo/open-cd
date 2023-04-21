@@ -3,11 +3,10 @@ import torch
 import torch.nn as nn
 
 from mmseg.models.backbones import ResNet
-from mmseg.models.builder import BACKBONES
+from opencd.registry import MODELS
 
-from opencd.models.utils import build_interaction_layer
 
-@BACKBONES.register_module()
+@MODELS.register_module()
 class IA_ResNet(ResNet):
     """Interaction ResNet backbone.
 
@@ -96,7 +95,7 @@ class IA_ResNet(ResNet):
         for ia_cfg in interaction_cfg:
             if ia_cfg is None:
                 ia_cfg = dict(type='TwoIdentity')
-            self.ccs.append(build_interaction_layer(ia_cfg))
+            self.ccs.append(MODELS.build(ia_cfg))
         self.ccs = nn.ModuleList(self.ccs)
     
     def forward(self, x1, x2):
@@ -124,7 +123,7 @@ class IA_ResNet(ResNet):
         return tuple(outs)
 
 
-@BACKBONES.register_module()
+@MODELS.register_module()
 class IA_ResNetV1c(IA_ResNet):
     """ResNetV1c variant described in [1]_.
 
@@ -139,7 +138,7 @@ class IA_ResNetV1c(IA_ResNet):
             deep_stem=True, avg_down=False, **kwargs)
 
 
-@BACKBONES.register_module()
+@MODELS.register_module()
 class IA_ResNetV1d(IA_ResNet):
     """ResNetV1d variant described in [1]_.
     Compared with default ResNet(ResNetV1b), ResNetV1d replaces the 7x7 conv in

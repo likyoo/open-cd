@@ -1,16 +1,14 @@
 # Copyright (c) Open-CD. All rights reserved.
-from dis import dis
 import torch
 import torch.nn as nn
-from torch.nn import functional as F
-from mmcv.cnn import ConvModule, Conv2d, build_activation_layer, build_norm_layer
+from mmcv.cnn import Conv2d, ConvModule, build_activation_layer
 from mmcv.cnn.bricks.drop import build_dropout
+from mmengine.model import BaseModule, Sequential
+from torch.nn import functional as F
 
-from mmseg.models.builder import HEADS
 from mmseg.models.decode_heads.decode_head import BaseDecodeHead
-from mmseg.ops import resize
-from mmcv.runner import BaseModule, auto_fp16, Sequential
-
+from mmseg.models.utils import resize
+from opencd.registry import MODELS
 from ..necks.feature_fusion import FeatureFusionNeck
 
 
@@ -147,7 +145,7 @@ class MixFFN(BaseModule):
         return identity + self.dropout_layer(out)
 
 
-@HEADS.register_module()
+@MODELS.register_module()
 class Changer(BaseDecodeHead):
     """The Head of Changer.
 
@@ -227,42 +225,3 @@ class Changer(BaseDecodeHead):
         out = self.cls_seg(out)
 
         return out
-    
-    def forward_train(self, inputs, img_metas, gt_semantic_seg, train_cfg):
-        """Forward function for training.
-        Args:
-            inputs (list[Tensor]): List of multi-level img features.
-            img_metas (list[dict]): List of image info dict where each dict
-                has: 'img_shape', 'scale_factor', 'flip', and may also contain
-                'filename', 'ori_shape', 'pad_shape', and 'img_norm_cfg'.
-                For details on the values of these keys see
-                `mmseg/datasets/pipelines/formatting.py:Collect`.
-            gt_semantic_seg (Tensor): Semantic segmentation masks
-                used if the architecture supports semantic segmentation task.
-            train_cfg (dict): The training config.
-
-        Returns:
-            dict[str, Tensor]: a dictionary of loss components
-        """
-        seg_logits = self.forward(inputs)
-        losses = self.losses(seg_logits, gt_semantic_seg)
-    
-        return losses
-    
-    def forward_test(self, inputs, img_metas, test_cfg):
-        """Forward function for testing.
-
-        Args:
-            inputs (list[Tensor]): List of multi-level img features.
-            img_metas (list[dict]): List of image info dict where each dict
-                has: 'img_shape', 'scale_factor', 'flip', and may also contain
-                'filename', 'ori_shape', 'pad_shape', and 'img_norm_cfg'.
-                For details on the values of these keys see
-                `mmseg/datasets/pipelines/formatting.py:Collect`.
-            test_cfg (dict): The testing config.
-
-        Returns:
-            Tensor: Output segmentation map.
-        """
-        seg_logits = self.forward(inputs)
-        return seg_logits

@@ -1,8 +1,9 @@
 # Copyright (c) Open-CD. All rights reserved.
 import torch
 import torch.nn as nn
-from mmcv.runner import BaseModule
-from mmcv.cnn import build_conv_layer, build_norm_layer, build_activation_layer
+from mmcv.cnn import build_activation_layer, build_conv_layer, build_norm_layer
+from mmengine.model import BaseModule
+
 from opencd.models.utils.builder import ITERACTION_LAYERS
 
 
@@ -15,7 +16,7 @@ class ChannelExchange(BaseModule):
             Defaults to 1/2.
     """
     def __init__(self, p=1/2):
-        super(ChannelExchange, self).__init__()
+        super().__init__()
         assert p >= 0 and p <= 1
         self.p = int(1/p)
 
@@ -43,7 +44,7 @@ class SpatialExchange(BaseModule):
             Defaults to 1/2.
     """
     def __init__(self, p=1/2):
-        super(SpatialExchange, self).__init__()
+        super().__init__()
         assert p >= 0 and p <= 1
         self.p = int(1/p)
 
@@ -69,7 +70,7 @@ class Aggregation_distribution(BaseModule):
                  attn_channels=None, 
                  act_cfg=dict(type='ReLU'),
                  norm_cfg=dict(type='BN', requires_grad=True)):
-        super(Aggregation_distribution, self).__init__()
+        super().__init__()
         self.num_paths = num_paths # `2` is supported.
         attn_channels = attn_channels or channels // 16
         attn_channels = max(attn_channels, 8)
@@ -96,7 +97,7 @@ class Aggregation_distribution(BaseModule):
 @ITERACTION_LAYERS.register_module()
 class TwoIdentity(BaseModule):
     def __init__(self, *args, **kwargs):
-        super(TwoIdentity, self).__init__()
+        super().__init__()
 
     def forward(self, x1, x2):
         return x1, x2

@@ -1,12 +1,13 @@
+import copy
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from mmcv.cnn import ConvModule, build_activation_layer, build_norm_layer
-from mmcv.runner import Sequential,ModuleList
+from mmcv.cnn import ConvModule
 
-from mmseg.ops import resize
-from mmseg.models.builder import HEADS
 from mmseg.models.decode_heads.decode_head import BaseDecodeHead
+from mmseg.models.utils import resize
+from opencd.registry import MODELS
 
 
 class BAM(nn.Module):
@@ -249,7 +250,7 @@ class CDSA(nn.Module):
         return x[:, :, :, 0:height], x[:, :, :, height:]
 
 
-@HEADS.register_module()
+@MODELS.register_module()
 class STAHead(BaseDecodeHead):
     """The Head of STANet.
 
@@ -347,45 +348,26 @@ class STAHead(BaseDecodeHead):
         dist = F.interpolate(dist, size=inputs[0].shape[2:], mode='bilinear', align_corners=True)
 
         return dist
-    
-    def forward_train(self, inputs, img_metas, gt_semantic_seg, train_cfg):
-        """Forward function for training.
-        Args:
-            inputs (list[Tensor]): List of multi-level img features.
-            img_metas (list[dict]): List of image info dict where each dict
-                has: 'img_shape', 'scale_factor', 'flip', and may also contain
-                'filename', 'ori_shape', 'pad_shape', and 'img_norm_cfg'.
-                For details on the values of these keys see
-                `mmseg/datasets/pipelines/formatting.py:Collect`.
-            gt_semantic_seg (Tensor): Semantic segmentation masks
-                used if the architecture supports semantic segmentation task.
-            train_cfg (dict): The training config.
 
-        Returns:
-            dict[str, Tensor]: a dictionary of loss components
-        """
-        seg_logits = self.forward(inputs)
-        losses = self.losses(seg_logits, gt_semantic_seg)
-    
-        return losses
-    
-    def forward_test(self, inputs, img_metas, test_cfg):
-        """Forward function for testing.
+    def predict_by_feat(self, seg_logits, batch_img_metas):
+        """Transform a batch of output seg_logits to the input shape.
 
         Args:
-            inputs (list[Tensor]): List of multi-level img features.
-            img_metas (list[dict]): List of image info dict where each dict
-                has: 'img_shape', 'scale_factor', 'flip', and may also contain
-                'filename', 'ori_shape', 'pad_shape', and 'img_norm_cfg'.
-                For details on the values of these keys see
-                `mmseg/datasets/pipelines/formatting.py:Collect`.
-            test_cfg (dict): The testing config.
+            seg_logits (Tensor): The output from decode head forward function.
+            batch_img_metas (list[dict]): Meta information of each image, e.g.,
+                image size, scaling factor, etc.
 
         Returns:
-            Tensor: Output segmentation map.
+            Tensor: Outputs segmentation logits map.
         """
-        seg_logits = self.forward(inputs)
-        # adapt `sigmoid` in post-processing
-        seg_logits[seg_logits > self.distance_threshold] = 100
-        seg_logits[seg_logits <= self.distance_threshold] = -100
+
+        seg_logits_copy = copy.deepcopy(seg_logits)
+        seg_logits[seg_logits_copy > self.distance_threshold] = 100
+        seg_logits[seg_logits_copy <= self.distance_threshold] = -100
+
+        seg_logits = resize(
+            input=seg_logits,
+            size=batch_img_metas[0]['img_shape'],
+            mode='bilinear',
+            align_corners=self.align_corners)
         return seg_logits

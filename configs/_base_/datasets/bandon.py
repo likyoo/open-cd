@@ -1,66 +1,78 @@
 # dataset settings
 dataset_type = 'BANDON_Dataset'
 data_root = 'data/BANDON'
-img_norm_cfg = dict(
-    mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
+
 crop_size = (512, 512)
 train_pipeline = [
     dict(type='MultiImgLoadImageFromFile'),
     dict(type='MultiImgMultiAnnLoadAnnotations'),
-    dict(type='MultiImgRandomCrop', crop_size=crop_size),
+    dict(type='MultiImgRandomCrop', crop_size=crop_size, cat_max_ratio=0.75),
     dict(type='MultiImgRandomFlip', prob=0.5),
-    dict(type='MultiImgNormalize', **img_norm_cfg),
-    dict(type='MultiImgDefaultFormatBundle'),
-    dict(type='Collect', keys=['img', 'gt_semantic_seg', 
-        'gt_semantic_seg_from', 'gt_semantic_seg_to']),
+    dict(type='MultiImgPackSegInputs')
 ]
+
 test_pipeline = [
     dict(type='MultiImgLoadImageFromFile'),
-    dict(
-        type='MultiImgMultiScaleFlipAug',
-        img_scale=(2048, 2048),
-        # img_ratios=[0.75, 1.0, 1.25],
-        flip=False,
-        transforms=[
-            dict(type='MultiImgResize', keep_ratio=True),
-            dict(type='MultiImgRandomFlip'),
-            dict(type='MultiImgNormalize', **img_norm_cfg),
-            dict(type='MultiImgImageToTensor', keys=['img']),
-            dict(type='Collect', keys=['img']),
-        ])
+    dict(type='MultiImgResize', scale=(2048, 2048), keep_ratio=True),
+    # add loading annotation after ``Resize`` because ground truth
+    # does not need to do resize data transform
+    dict(type='MultiImgMultiAnnLoadAnnotations'),
+    dict(type='MultiImgPackSegInputs')
 ]
-data = dict(
-    samples_per_gpu=8,
-    workers_per_gpu=4,
-    train=dict(
+
+train_dataloader = dict(
+    batch_size=8,
+    num_workers=4,
+    persistent_workers=True,
+    sampler=dict(type='InfiniteSampler', shuffle=True),
+    dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        img_dir='train',
-        ann_dir=dict(
-            binary_dir='train/labels_unch0ch1ig255',
-            semantic_dir_from='train/building_labels',
-            semantic_dir_to='train/building_labels'),
-        split='train.txt',
-        pipeline=train_pipeline),
-    val=dict(
+        ann_file='train.txt',
+        data_prefix=dict(
+            img_path_from='train/imgs',
+            img_path_to='train/imgs',
+            seg_map_path='train/labels_unch0ch1ig255',
+            seg_map_path_from='train/building_labels',
+            seg_map_path_to='train/building_labels'),
+        pipeline=train_pipeline))
+val_dataloader = dict(
+    batch_size=1,
+    num_workers=4,
+    persistent_workers=True,
+    sampler=dict(type='DefaultSampler', shuffle=False),
+    dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        img_dir='val',
-        ann_dir=dict(
-            binary_dir='val/labels',
-            semantic_dir_from='val/building_labels',
-            semantic_dir_to='val/building_labels'),
-        split='val.txt',
-        format_ann = 'binary',
-        pipeline=test_pipeline),
-    test=dict(
-        type=dataset_type,
-        data_root=data_root,
-        img_dir='val',
-        ann_dir=dict(
-            binary_dir='val/labels',
-            semantic_dir_from='val/building_labels',
-            semantic_dir_to='val/building_labels'),
-        split='val.txt',
-        format_ann = 'binary',
+        ann_file='val.txt',
+        format_seg_map='to_binary',
+        data_prefix=dict(
+            img_path_from='val/imgs',
+            img_path_to='val/imgs',
+            seg_map_path='val/labels',
+            seg_map_path_from='val/building_labels',
+            seg_map_path_to='val/building_labels'),
         pipeline=test_pipeline))
+test_dataloader = dict(
+    batch_size=1,
+    num_workers=4,
+    persistent_workers=True,
+    sampler=dict(type='DefaultSampler', shuffle=False),
+    dataset=dict(
+        type=dataset_type,
+        data_root=data_root,
+        ann_file='test.txt',
+        format_seg_map='to_binary',
+        data_prefix=dict(
+            img_path_from='val/imgs',
+            img_path_to='val/imgs',
+            seg_map_path='val/labels',
+            seg_map_path_from='val/building_labels',
+            seg_map_path_to='val/building_labels'),
+        pipeline=test_pipeline))
+
+val_evaluator = dict(
+    type='SCDMetric', 
+    iou_metrics=['mFscore', 'mIoU'], 
+    cal_sek=True)
+test_evaluator = val_evaluator

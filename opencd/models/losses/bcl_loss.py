@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 
-from mmseg.models.builder import LOSSES
+from opencd.registry import MODELS
 
 
 def bcl_loss(
@@ -24,7 +24,7 @@ def bcl_loss(
     return loss
 
 
-@LOSSES.register_module
+@MODELS.register_module()
 class BCLLoss(nn.Module):
     """Batch-balanced Contrastive Loss"""
 
@@ -35,7 +35,7 @@ class BCLLoss(nn.Module):
         ignore_index=255,
         loss_name='bcl_loss',
         **kwargs):
-        super(BCLLoss, self).__init__()
+        super().__init__()
         self.margin = margin
         self.loss_weight = loss_weight
         self.ignore_index = ignore_index

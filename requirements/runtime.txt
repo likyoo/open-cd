@@ -1,6 +1,5 @@
 matplotlib
-mmcls>=0.20.1
-mmsegmentation>=0.28.0
 numpy
 packaging
 prettytable
+scipy

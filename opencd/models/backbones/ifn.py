@@ -1,17 +1,11 @@
 # credits: https://github.com/GeoZcx/A-deeply-supervised-image-fusion-network-for-change-detection-in-remote-sensing-images
-
-import torch
-import torch.nn as nn
-from torchvision.models import vgg16
-
-from mmseg.models.builder import BACKBONES
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torchvision.models import vgg16
 
-from mmseg.models.builder import BACKBONES
+from opencd.registry import MODELS
+
 
 def get_norm_layer():
     # TODO: select appropriate norm layer
@@ -122,7 +116,7 @@ def conv2d_bn(in_ch, out_ch, with_dropout=True):
     return nn.Sequential(*lst)
 
 
-@BACKBONES.register_module()
+@MODELS.register_module()
 class IFN(nn.Module):
     def __init__(self, use_dropout=False):
         super().__init__()

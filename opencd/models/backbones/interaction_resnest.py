@@ -1,11 +1,11 @@
 # Copyright (c) Open-CD. All rights reserved.
-from mmseg.models.builder import BACKBONES
-from mmseg.models.utils import ResLayer
 from mmseg.models.backbones.resnest import Bottleneck
+from mmseg.models.utils import ResLayer
+from opencd.registry import MODELS
 from .interaction_resnet import IA_ResNetV1d
 
 
-@BACKBONES.register_module()
+@MODELS.register_module()
 class IA_ResNeSt(IA_ResNetV1d):
     """Interaction ResNeSt backbone.
     This backbone is the implementation of `ResNeSt:

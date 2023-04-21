@@ -3,24 +3,21 @@ import warnings
 
 import torch
 import torch.nn as nn
-from mmcv.cnn import ConvModule
-from mmcv.runner import BaseModule
-from torch.utils import checkpoint as cp
-from torch.nn.modules.batchnorm import _BatchNorm
+from mmcv.cnn import ConvModule, build_activation_layer, build_norm_layer
+from mmengine.model import BaseModule
 from torch.nn import functional as F
+from torch.nn.modules.batchnorm import _BatchNorm
+from torch.utils import checkpoint as cp
 
-from mmseg.models.builder import BACKBONES
-from mmseg.models.utils import make_divisible, InvertedResidual, SELayer
-
-from mmcls.models.backbones.convnext import LayerNorm2d
-from mmcv.cnn import build_conv_layer, build_norm_layer, build_activation_layer
+from mmseg.models.utils import SELayer, make_divisible
+from opencd.registry import MODELS
 
 
 class AsymGlobalAttn(BaseModule):
     def __init__(self, dim, strip_kernel_size=21):
         super().__init__()
 
-        self.norm = LayerNorm2d(dim, eps=1e-6)
+        self.norm = build_norm_layer(dict(type='mmcls.LN2d', eps=1e-6), dim)[1]
         self.global_ = nn.Sequential(
                 nn.Conv2d(dim, dim, 1),
                 nn.Conv2d(dim, dim, (1, strip_kernel_size), padding=(0, (strip_kernel_size-1)//2), groups=dim),
@@ -185,7 +182,7 @@ class PriorFusion(BaseModule):
 
         self.pseudo_fusion = nn.Sequential(
                 nn.Conv2d(channels * 2, channels * 2, 3, padding=1, groups=channels * 2),
-                LayerNorm2d(channels * 2),
+                build_norm_layer(dict(type='mmcls.LN2d', eps=1e-6), channels * 2)[1],
                 nn.GELU(),
                 nn.Conv2d(channels * 2, channels, 3, padding=1, groups=channels),
         )
@@ -302,7 +299,7 @@ class TinyBlock(BaseModule):
         return out
 
 
-@BACKBONES.register_module()
+@MODELS.register_module()
 class TinyNet(BaseModule):
     """TinyNet backbone.
     This backbone is the implementation of
@@ -369,7 +366,7 @@ class TinyNet(BaseModule):
                  with_cp=False,
                  pretrained=None,
                  init_cfg=None):
-        super(TinyNet, self).__init__(init_cfg)
+        super().__init__(init_cfg)
 
         self.arch_settings = self.change_extractor_settings[arch]
         self.pretrained = pretrained

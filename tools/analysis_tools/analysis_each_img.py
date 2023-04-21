@@ -1,7 +1,7 @@
+import csv
 import os
 import os.path as osp
 import sys
-import csv
 from pathlib import Path
 
 import cv2

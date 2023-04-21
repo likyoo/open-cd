@@ -1,12 +1,12 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from mmengine.model import BaseModule
 
-from mmseg.models.builder import NECKS
-from mmcv.runner import BaseModule, auto_fp16
+from opencd.registry import MODELS
 
 
-@NECKS.register_module()
+@MODELS.register_module()
 class FeatureFusionNeck(BaseModule):
     """Feature Fusion Neck.
 
@@ -23,12 +23,11 @@ class FeatureFusionNeck(BaseModule):
                  in_channels=None,
                  channels=None,
                  out_indices=(0, 1, 2, 3)):
-        super(FeatureFusionNeck, self).__init__()
+        super().__init__()
         self.policy = policy
         self.in_channels = in_channels
         self.channels = channels
         self.out_indices = out_indices
-        self.fp16_enabled = False
 
     @staticmethod
     def fusion(x1, x2, policy):
@@ -49,7 +48,6 @@ class FeatureFusionNeck(BaseModule):
 
         return x
 
-    @auto_fp16()
     def forward(self, x1, x2):
         """Forward function."""
 

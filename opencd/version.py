@@ -1,9 +1,14 @@
 # Copyright (c) Open-CD. All rights reserved.
 
-__version__ = '0.0.3'
+__version__ = '1.0.0'
+
+from typing import Tuple
+
+short_version = __version__
 
 
-def parse_version_info(version_str):
+def parse_version_info(version_str: str) -> Tuple:
+    """Parse version info of Open-CD."""
     version_info = []
     for x in version_str.split('.'):
         if x.isdigit():

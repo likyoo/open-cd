@@ -2,15 +2,14 @@
 import torch.nn as nn
 import torch.nn.functional as F
 from mmcv.cnn import ConvModule
-from mmcv.runner import BaseModule, auto_fp16
+from mmengine.model import BaseModule
 
-from mmseg.ops import resize
-from mmseg.models.builder import NECKS
-
+from mmseg.models.utils import resize
+from opencd.registry import MODELS
 from ..backbones.tinynet import TinyBlock
 
 
-@NECKS.register_module()
+@MODELS.register_module()
 class TinyFPN(BaseModule):
     """Feature Pyramid Network.
     This neck is the implementation of `Feature Pyramid Networks for Object
@@ -81,7 +80,7 @@ class TinyFPN(BaseModule):
                  upsample_cfg=dict(mode='nearest'),
                  init_cfg=dict(
                      type='Xavier', layer='Conv2d', distribution='uniform')):
-        super(TinyFPN, self).__init__(init_cfg)
+        super().__init__(init_cfg)
         assert isinstance(in_channels, list)
         self.in_channels = in_channels
         self.out_channels = out_channels
@@ -152,7 +151,6 @@ class TinyFPN(BaseModule):
                     expand_ratio=1)
                 self.fpn_convs.append(extra_fpn_conv)
 
-    @auto_fp16()
     def forward(self, inputs):
         if self.exist_early_x:
             early_x = inputs[0]

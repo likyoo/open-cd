@@ -2,11 +2,11 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from mmcv.cnn import ConvModule, build_activation_layer, build_norm_layer
-from mmcv.runner import Sequential,ModuleList
+from mmengine.model import ModuleList, Sequential
 
-from mmseg.ops.wrappers import Upsample
-from mmseg.models.builder import HEADS
 from mmseg.models.decode_heads.decode_head import BaseDecodeHead
+from mmseg.models.utils import Upsample
+from opencd.registry import MODELS
 
 
 class CrossAttention(nn.Module):
@@ -39,9 +39,9 @@ class CrossAttention(nn.Module):
         k = self.to_k(ref)
         v = self.to_v(ref)
 
-        q = q.reshape((b,n,h,-1)).permute((0,2,1,3))
-        k = k.reshape((b,ref.shape[1],h,-1)).permute((0,2,1,3))
-        v = v.reshape((b,ref.shape[1],h,-1)).permute((0,2,1,3))
+        q = q.reshape((b, n, h, -1)).permute((0, 2, 1, 3))
+        k = k.reshape((b, ref.shape[1], h, -1)).permute((0, 2, 1, 3))
+        v = v.reshape((b, ref.shape[1], h, -1)).permute((0, 2, 1, 3))
 
         mult = torch.matmul(q, k.transpose(-1,-2)) * self.scale
 
@@ -119,13 +119,13 @@ class TransformerDecoder(nn.Module):
         self.norm1_ = build_norm_layer(norm_cfg, in_dims)[1]
         self.norm2 = build_norm_layer(norm_cfg, in_dims)[1]
 
-    def forward(self, x,ref):
+    def forward(self, x, ref):
         x_ = self.attn(self.norm1(x),self.norm1_(ref)) + x
         y = self.ff(self.norm2(x_)) + x_
         return y
 
 
-@HEADS.register_module()
+@MODELS.register_module()
 class BITHead(BaseDecodeHead):
     """BIT Head
 
@@ -167,7 +167,7 @@ class BITHead(BaseDecodeHead):
                  norm_cfg=dict(type='LN'),
                  act_cfg=dict(type='ReLU', inplace=True),
                  **kwargs):
-        super(BITHead, self).__init__(in_channels, channels, **kwargs)
+        super().__init__(in_channels, channels, **kwargs)
         self.norm_cfg = norm_cfg
         self.act_cfg = act_cfg
         self.embed_dims=embed_dims

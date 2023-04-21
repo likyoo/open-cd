@@ -1,9 +1,9 @@
 # Copyright (c) Open-CD. All rights reserved.
-from mmseg.models.builder import HEADS
+from opencd.registry import MODELS
 from .multi_head import MultiHeadDecoder
 
 
-@HEADS.register_module()
+@MODELS.register_module()
 class GeneralSCDHead(MultiHeadDecoder):
     """The Head of General Semantic Change Detection Head."""
 
@@ -18,9 +18,9 @@ class GeneralSCDHead(MultiHeadDecoder):
         out = self.binary_cd_head(inputs_)
 
         out_dict = dict(
-            binary_cd_logit=out,
-            semantic_cd_logit_from=out1, 
-            semantic_cd_logit_to=out2
+            seg_logits=out,
+            seg_logits_from=out1, 
+            seg_logits_to=out2
         )
 
         return out_dict

@@ -170,7 +170,7 @@ if __name__ == '__main__':
         long_description=readme(),
         long_description_content_type='text/markdown',
         author='Open-CD Contributors',
-        author_email='likyoo@sdust.edu.cn',
+        author_email='likyoo@qq.com',
         keywords='computer vision, change detection',
         url='https://github.com/likyoo/open-cd',
         packages=find_packages(exclude=('configs', 'tools', 'demo')),

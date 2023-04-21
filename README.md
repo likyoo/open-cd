@@ -7,6 +7,7 @@ Open-CD is an open source change detection toolbox based on a series of open sou
 
 
 ## News
+- 4/21/2023 - Open-CD v1.0.0 is released in 1.x branch, based on OpenMMLab 2.0 ! PyTorch 2.0 is also supported ! Enjoy it !
 - 3/14/2023 - Open-CD is upgraded to v0.0.3. Semantic Change Detection (SCD) is supported !
 - 11/17/2022 - Open-CD is upgraded to v0.0.2, requiring a higher version of the MMSegmentation dependency.
 - 9/28/2022 - The code, pre-trained models and logs of [ChangerEx](https://github.com/likyoo/open-cd/tree/main/configs/changer) are available. :yum:
@@ -17,7 +18,7 @@ Open-CD is an open source change detection toolbox based on a series of open sou
 
 Supported toolboxes:
 
-- [x] [MMSegmentation](https://github.com/open-mmlab/mmsegmentation)
+- [x] [OpenMMLab Toolkits](https://github.com/open-mmlab/mmsegmentation)
 - [x] [pytorch-image-models](https://github.com/rwightman/pytorch-image-models)
 - [ ] ...
 
@@ -63,14 +64,14 @@ pip install -v -e .
 ```
 train
 ```
-python tools/train.py configs/changer/changer_ex_r18_512x512_40k_levircd.py --work-dir ./changer_r18_levir_workdir --gpu-id 0 --seed 307
+python tools/train.py configs/changer/changer_ex_r18_512x512_40k_levircd.py --work-dir ./changer_r18_levir_workdir
 ```
 infer
 ```
 # get .png results
-python tools/test.py configs/changer/changer_ex_r18_512x512_40k_levircd.py  changer_r18_levir_workdir/latest.pth --format-only --eval-options "imgfile_prefix=tmp_infer"
+python tools/test.py configs/changer/changer_ex_r18_512x512_40k_levircd.py  changer_r18_levir_workdir/latest.pth --show-dir tmp_infer
 # get metrics
-python tools/test.py configs/changer/changer_ex_r18_512x512_40k_levircd.py  changer_r18_levir_workdir/latest.pth --eval mFscore mIoU
+python tools/test.py configs/changer/changer_ex_r18_512x512_40k_levircd.py  changer_r18_levir_workdir/latest.pth
 ```
 
 ## Citation
@@ -91,4 +92,3 @@ If you find this project useful in your research, please consider cite:
 ## License
 
 Open-CD is released under the Apache 2.0 license.
-

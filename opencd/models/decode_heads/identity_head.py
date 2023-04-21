@@ -2,20 +2,18 @@
 import torch
 import torch.nn as nn
 
-from mmcv.runner import force_fp32
-
-from mmseg.ops import resize
-from mmseg.models.losses import accuracy
-from mmseg.models.builder import HEADS
 from mmseg.models.decode_heads.decode_head import BaseDecodeHead
+from mmseg.models.losses import accuracy
+from mmseg.models.utils import resize
+from opencd.registry import MODELS
 
 
-@HEADS.register_module()
+@MODELS.register_module()
 class IdentityHead(BaseDecodeHead):
     """Identity Head."""
 
     def __init__(self, **kwargs):
-        super(IdentityHead, self).__init__(channels=1, **kwargs)
+        super().__init__(channels=1, **kwargs)
         delattr(self, 'conv_seg')
     
     def init_weights(self):
@@ -39,12 +37,12 @@ class IdentityHead(BaseDecodeHead):
         return output
 
 
-@HEADS.register_module()
+@MODELS.register_module()
 class DSIdentityHead(BaseDecodeHead):
     """Deep Supervision Identity Head."""
 
     def __init__(self, **kwargs):
-        super(DSIdentityHead, self).__init__(channels=1, **kwargs)
+        super().__init__(channels=1, **kwargs)
         delattr(self, 'conv_seg')
     
     def init_weights(self):
@@ -66,13 +64,24 @@ class DSIdentityHead(BaseDecodeHead):
         """Forward function."""
         output = self._forward_feature(inputs)
         return output
-    
-    @force_fp32(apply_to=('seg_logit', ))
-    def losses(self, seg_logit, seg_label):
-        """Compute segmentation loss."""
+
+    def loss_by_feat(self, seg_logits, batch_data_samples):
+        """Compute segmentation loss.
+
+        Args:
+            seg_logits (Tensor): The output from decode head forward function.
+            batch_data_samples (List[:obj:`SegDataSample`]): The seg
+                data samples. It usually includes information such
+                as `metainfo` and `gt_sem_seg`.
+
+        Returns:
+            dict[str, Tensor]: a dictionary of loss components
+        """
+
+        seg_label = self._stack_batch_gt(batch_data_samples)
         loss = dict()
         seg_label_size = seg_label.shape[2:]
-        for seg_idx, single_seg_logit in enumerate(seg_logit):
+        for seg_idx, single_seg_logit in enumerate(seg_logits):
             single_seg_logit = resize(
                 input=single_seg_logit,
                 size=seg_label_size,
@@ -104,5 +113,5 @@ class DSIdentityHead(BaseDecodeHead):
                         ignore_index=self.ignore_index)
 
         loss['acc_seg'] = accuracy(
-            single_seg_logit, seg_label, ignore_index=self.ignore_index)
+                    single_seg_logit, seg_label, ignore_index=self.ignore_index)
         return loss
