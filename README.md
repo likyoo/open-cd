@@ -7,6 +7,7 @@ Open-CD is an open source change detection toolbox based on a series of open sou
 
 
 ## News
+- 4/21/2023 - Open-CD v1.0.0 is released in [1.x branch](https://github.com/likyoo/open-cd/tree/1.x), based on OpenMMLab 2.0 ! PyTorch 2.0 is also supported ! Enjoy it !
 - 3/14/2023 - Open-CD is upgraded to v0.0.3. Semantic Change Detection (SCD) is supported !
 - 11/17/2022 - Open-CD is upgraded to v0.0.2, requiring a higher version of the MMSegmentation dependency.
 - 9/28/2022 - The code, pre-trained models and logs of [ChangerEx](https://github.com/likyoo/open-cd/tree/main/configs/changer) are available. :yum:
