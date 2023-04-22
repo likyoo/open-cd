@@ -58,9 +58,11 @@ Please refer to [get_started.md](https://github.com/open-mmlab/mmsegmentation/bl
 
 #### simple usage
 ```
+# Install OpenMMLab Toolkits as Python packages
 pip install -U openmim
 mim install mmengine
 mim install "mmcv>=2.0.0"
+mim install "mmpretrain>=1.0.0rc6"
 pip install "mmsegmentation>=1.0.0"
 pip install "mmdet>=3.0.0"
 ```
