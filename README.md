@@ -58,6 +58,13 @@ Please refer to [get_started.md](https://github.com/open-mmlab/mmsegmentation/bl
 
 #### simple usage
 ```
+pip install -U openmim
+mim install mmengine
+mim install "mmcv>=2.0.0"
+pip install "mmsegmentation>=1.0.0"
+pip install "mmdet>=3.0.0"
+```
+```
 git clone https://github.com/likyoo/open-cd.git
 cd open-cd
 pip install -v -e .

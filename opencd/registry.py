@@ -69,25 +69,6 @@ WEIGHT_INITIALIZERS = Registry(
     parent=MMENGINE_WEIGHT_INITIALIZERS,
     locations=['opencd.models'])
 
-# manage all kinds of optimizers like `SGD` and `Adam`
-OPTIMIZERS = Registry(
-    'optimizer',
-    parent=MMENGINE_OPTIMIZERS,
-    locations=['opencd.engine.optimizers'])
-OPTIM_WRAPPERS = Registry(
-    'optim_wrapper',
-    parent=MMENGINE_OPTIM_WRAPPERS,
-    locations=['opencd.engine.optimizers'])
-# manage constructors that customize the optimization hyperparameters.
-OPTIM_WRAPPER_CONSTRUCTORS = Registry(
-    'optimizer constructor',
-    parent=MMENGINE_OPTIM_WRAPPER_CONSTRUCTORS,
-    locations=['opencd.engine.optimizers'])
-# manage all kinds of parameter schedulers like `MultiStepLR`
-PARAM_SCHEDULERS = Registry(
-    'parameter scheduler',
-    parent=MMENGINE_PARAM_SCHEDULERS,
-    locations=['opencd.engine.optimizers'])
 # manage all kinds of metrics
 METRICS = Registry(
     'metric', parent=MMENGINE_METRICS, locations=['opencd.evaluation'])

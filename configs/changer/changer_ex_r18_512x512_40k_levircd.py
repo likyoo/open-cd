@@ -43,4 +43,4 @@ optim_wrapper = dict(
     type='OptimWrapper',
     optimizer=optimizer)
 
-compile = True # use PyTorch 2.x
+# compile = True # use PyTorch 2.x

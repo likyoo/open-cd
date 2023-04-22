@@ -118,11 +118,3 @@ opencd/.mim
 
 # Pytorch
 *.pth
-
-# dev
-tests
-tmp_work_dir
-TODO.md
-
-# next work
-changer*
