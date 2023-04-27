@@ -18,7 +18,7 @@ Open-CD is an open source change detection toolbox based on a series of open sou
 
 Supported toolboxes:
 
-- [x] [OpenMMLab Toolkits](https://github.com/open-mmlab/mmsegmentation)
+- [x] [OpenMMLab Toolkits](https://github.com/open-mmlab)
 - [x] [pytorch-image-models](https://github.com/rwightman/pytorch-image-models)
 - [ ] ...
 
