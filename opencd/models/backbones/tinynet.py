@@ -17,7 +17,7 @@ class AsymGlobalAttn(BaseModule):
     def __init__(self, dim, strip_kernel_size=21):
         super().__init__()
 
-        self.norm = build_norm_layer(dict(type='mmcls.LN2d', eps=1e-6), dim)[1]
+        self.norm = build_norm_layer(dict(type='mmpretrain.LN2d', eps=1e-6), dim)[1]
         self.global_ = nn.Sequential(
                 nn.Conv2d(dim, dim, 1),
                 nn.Conv2d(dim, dim, (1, strip_kernel_size), padding=(0, (strip_kernel_size-1)//2), groups=dim),
@@ -182,7 +182,7 @@ class PriorFusion(BaseModule):
 
         self.pseudo_fusion = nn.Sequential(
                 nn.Conv2d(channels * 2, channels * 2, 3, padding=1, groups=channels * 2),
-                build_norm_layer(dict(type='mmcls.LN2d', eps=1e-6), channels * 2)[1],
+                build_norm_layer(dict(type='mmpretrain.LN2d', eps=1e-6), channels * 2)[1],
                 nn.GELU(),
                 nn.Conv2d(channels * 2, channels, 3, padding=1, groups=channels),
         )
