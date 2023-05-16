@@ -49,4 +49,4 @@ Change detection is an important tool for long-term earth observation missions. 
 
 - All metrics are based on the category "change".
 - All scores are computed on the test set.
-- The performance of `MIT-B0` is unstable. `ChangerEx` with `MIT-B0` may fluctuate about 0.5 IoU.
+- The performance of `MIT-B0` is unstable. `ChangerEx` with `MIT-B0` may fluctuate about 0.5 F1-Score.
