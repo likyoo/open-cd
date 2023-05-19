@@ -33,8 +33,8 @@ Supported change detection model:
 - [x] [SNUNet (GRSL'2021)](configs/snunet)
 - [x] [BiT (TGRS'2021)](configs/bit)
 - [x] [ChangeFormer (IGARSS'22)](configs/changeformer)
-- [x] [TinyCD (arXiv'2022)](configs/tinycd)
-- [x] [Changer (arXiv'2022)](configs/changer)
+- [x] [TinyCD (NCA'2023)](configs/tinycd)
+- [x] [Changer (TGRS'2023)](configs/changer)
 - [x] [TinyCDv2](configs/tinycd_v2)
 - [ ] ...
 
