@@ -90,14 +90,15 @@ python tools/test.py configs/changer/changer_ex_r18_512x512_40k_levircd.py  chan
 If you find this project useful in your research, please consider cite:
 
 ```bibtex
-@article{fang2022changer,
+@ARTICLE{10129139,
+  author={Fang, Sheng and Li, Kaiyu and Li, Zhe},
+  journal={IEEE Transactions on Geoscience and Remote Sensing}, 
   title={Changer: Feature Interaction is What You Need for Change Detection}, 
-  author={Sheng Fang and Kaiyu Li and Zhe Li},
-  year={2022},
-  eprint={2209.08290},
-  archivePrefix={arXiv},
-  primaryClass={cs.CV}
-}
+  year={2023},
+  volume={},
+  number={},
+  pages={1-1},
+  doi={10.1109/TGRS.2023.3277496}}
 ```
 
 ## License
