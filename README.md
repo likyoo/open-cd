@@ -95,9 +95,9 @@ If you find this project useful in your research, please consider cite:
   journal={IEEE Transactions on Geoscience and Remote Sensing}, 
   title={Changer: Feature Interaction is What You Need for Change Detection}, 
   year={2023},
-  volume={},
+  volume={61},
   number={},
-  pages={1-1},
+  pages={1-11},
   doi={10.1109/TGRS.2023.3277496}}
 ```
 
