@@ -35,7 +35,8 @@ Supported change detection model:
 - [x] [ChangeFormer (IGARSS'22)](configs/changeformer)
 - [x] [TinyCD (NCA'2023)](configs/tinycd)
 - [x] [Changer (TGRS'2023)](configs/changer)
-- [x] [TinyCDv2](configs/tinycd_v2)
+- [x] [HANet (JSTARS'2023)](configs/hanet)
+- [x] [TinyCDv2 (Under Review)](configs/tinycd_v2)
 - [ ] ...
 
 Supported datasets: | [Descriptions](https://github.com/wenhwu/awesome-remote-sensing-change-detection)
