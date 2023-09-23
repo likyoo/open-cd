@@ -35,7 +35,6 @@ Moreover, you can use `OpenCDInferencer` to process a list of images:
 >>> images = [[image1_A, image1_B], [image2_A, image2_B], ...] # image1_A can be a file path or a np.ndarray
 >>> inferencer(images, show=True, wait_time=0.5) # wait_time is delay time, and 0 means forever
 
-
 # Save visualized rendering color maps and predicted results
 # out_dir is the directory to save the output results, img_out_dir and pred_out_dir are subdirectories of out_dir
 # to save visualized rendering color maps and predicted results
