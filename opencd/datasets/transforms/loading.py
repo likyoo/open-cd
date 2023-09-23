@@ -422,9 +422,9 @@ class MultiImgLoadInferencerLoader(BaseTransform):
     def __init__(self, **kwargs) -> None:
         super().__init__()
         self.from_file = TRANSFORMS.build(
-            dict(type='LoadImageFromFile', **kwargs))
+            dict(type='MultiImgLoadImageFromFile', **kwargs))
         self.from_ndarray = TRANSFORMS.build(
-            dict(type='LoadImageFromNDArray', **kwargs))
+            dict(type='MultiImgLoadLoadImageFromNDArray', **kwargs))
 
     def transform(self, single_input: Union[str, np.ndarray, dict]) -> dict:
         """Transform function to add image meta information.
@@ -436,11 +436,14 @@ class MultiImgLoadInferencerLoader(BaseTransform):
         Returns:
             dict: The dict contains loaded image and meta information.
         """
-        if isinstance(single_input, str):
+        assert len(single_input) == 2, \
+            'In `MultiImgLoadInferencerLoader`,' \
+            '`single_input` contains bi-temporal images'
+        if isinstance(single_input[0], str):
             inputs = dict(img_path=single_input)
-        elif isinstance(single_input, Union[np.ndarray, list]):
+        elif isinstance(single_input[0], Union[np.ndarray, list]):
             inputs = dict(img=single_input)
-        elif isinstance(single_input, dict):
+        elif isinstance(single_input[0], dict):
             inputs = single_input
         else:
             raise NotImplementedError
