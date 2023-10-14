@@ -1,10 +1,10 @@
 # Copyright (c) Open-CD. All rights reserved.
 from opencd.registry import DATASETS
-from .basecddataset import BaseCDDataset
+from .basecddataset import _BaseCDDataset
 
 
 @DATASETS.register_module()
-class RSIPAC_CD_Dataset(BaseCDDataset):
+class RSIPAC_CD_Dataset(_BaseCDDataset):
     """RSIPAC_CD dataset"""
     METAINFO = dict(
         classes=('unchanged', 'changed'),

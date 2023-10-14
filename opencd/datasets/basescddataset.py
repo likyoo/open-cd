@@ -8,11 +8,11 @@ import mmengine.fileio as fileio
 import numpy as np
 
 from mmseg.registry import DATASETS
-from .basecddataset import BaseCDDataset
+from .basecddataset import _BaseCDDataset
 
 
 @DATASETS.register_module()
-class BaseSCDDataset(BaseCDDataset):
+class BaseSCDDataset(_BaseCDDataset):
     def __init__(self,
                  lazy_init=False,
                  reduce_semantic_zero_label=False,

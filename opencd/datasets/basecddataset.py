@@ -12,7 +12,7 @@ from mmseg.registry import DATASETS
 
 
 @DATASETS.register_module()
-class BaseCDDataset(BaseDataset):
+class _BaseCDDataset(BaseDataset):
     """Custom datasets for change detection. An example of file structure
     is as followed.
     .. code-block:: none

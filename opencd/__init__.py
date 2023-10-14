@@ -16,11 +16,11 @@ mmengine_maximum_version = '1.0.0'
 mmengine_version = digit_version(mmengine.__version__)
 
 mmseg_minimum_version = '1.0.0rc6'
-mmseg_maximum_version = '1.1.0'
+mmseg_maximum_version = '1.2.1'
 mmseg_version = digit_version(mmseg.__version__)
 
 mmdet_minimum_version = '3.0.0rc6'
-mmdet_maximum_version = '3.1.0'
+mmdet_maximum_version = '4.0.0'
 mmdet_version = digit_version(mmdet.__version__)
 
 assert (mmcv_version >= digit_version(mmcv_minimum_version)
