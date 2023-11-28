@@ -41,6 +41,7 @@ Supported change detection model:
 
 Supported datasets: | [Descriptions](https://github.com/wenhwu/awesome-remote-sensing-change-detection)
 - [x] [LEVIR-CD](https://justchenhao.github.io/LEVIR/)
+- [x] [WHU-CD](https://study.rsgis.whu.edu.cn/pages/download/building_dataset.html)
 - [x] [S2Looking](https://github.com/S2Looking/Dataset)
 - [x] [SVCD](https://drive.google.com/file/d/1GX656JqqOyBi_Ef0w65kDGVto-nHrNs9/edit)
 - [x] [DSIFN](https://github.com/GeoZcx/A-deeply-supervised-image-fusion-network-for-change-detection-in-remote-sensing-images/tree/master/dataset)
