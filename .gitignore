@@ -115,6 +115,7 @@ data
 *.log.json
 work_dirs/
 opencd/.mim
+.history
 
 # Pytorch
 *.pth
