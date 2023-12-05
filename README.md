@@ -92,6 +92,13 @@ python tools/test.py configs/changer/changer_ex_r18_512x512_40k_levircd.py  chan
 If you find this project useful in your research, please consider cite:
 
 ```bibtex
+@article{li2023new,
+      title={A New Learning Paradigm for Foundation Model-based Remote Sensing Change Detection}, 
+      author={Li, Kaiyu and Cao, Xiangyong and Meng, Deyu},
+      journal={arXiv preprint arXiv:2312.01163},
+      year={2023}
+}
+
 @ARTICLE{10129139,
   author={Fang, Sheng and Li, Kaiyu and Li, Zhe},
   journal={IEEE Transactions on Geoscience and Remote Sensing}, 
