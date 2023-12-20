@@ -26,7 +26,8 @@ class CDLocalVisualizer(SegLocalVisualizer):
             wait_time: float = 0,
             # TODO: Supported in mmengine's Viusalizer.
             out_file: Optional[str] = None,
-            step: int = 0) -> None:
+            step: int = 0,
+            with_labels: Optional[bool] = False) -> None:
         """Draw datasample and save to all backends.
 
         - If GT and prediction are plotted at the same time, they are
@@ -53,6 +54,8 @@ class CDLocalVisualizer(SegLocalVisualizer):
             wait_time (float): The interval of show (s). Defaults to 0.
             out_file (str): Path to output file. Defaults to None.
             step (int): Global step value to record. Defaults to 0.
+            with_labels(bool, optional): Add semantic labels in visualization
+                result, Defaults to True.
         """
         exist_img_from_to = True if len(image_from_to) > 0 else False
         if exist_img_from_to:
@@ -80,9 +83,8 @@ class CDLocalVisualizer(SegLocalVisualizer):
                                         'not provided when ' \
                                         'visualizing change ' \
                                         'deteaction results.'
-            gt_img_data = self._draw_sem_seg(gt_img_data,
-                                             data_sample.gt_sem_seg, classes,
-                                             palette)
+            gt_img_data = self._draw_sem_seg(gt_img_data, data_sample.gt_sem_seg,
+                                             classes, palette, with_labels)
         if draw_gt and data_sample is not None and 'gt_sem_seg_from' in data_sample \
             and 'gt_sem_seg_to' in data_sample:
             if exist_img_from_to:
@@ -97,10 +99,10 @@ class CDLocalVisualizer(SegLocalVisualizer):
                                         'deteaction results.'
             gt_img_data_from = self._draw_sem_seg(gt_img_data_from,
                                              data_sample.gt_sem_seg_from, semantic_classes,
-                                             semantic_palette)
+                                             semantic_palette, with_labels)
             gt_img_data_to = self._draw_sem_seg(gt_img_data_to,
                                              data_sample.gt_sem_seg_to, semantic_classes,
-                                             semantic_palette)
+                                             semantic_palette, with_labels)
 
         if (draw_pred and data_sample is not None
                 and 'pred_sem_seg' in data_sample):
@@ -111,7 +113,8 @@ class CDLocalVisualizer(SegLocalVisualizer):
                                         'segmentation results.'
             pred_img_data = self._draw_sem_seg(pred_img_data,
                                                data_sample.pred_sem_seg,
-                                               classes, palette)
+                                               classes, palette,
+                                               with_labels)
             
         if (draw_pred and data_sample is not None and 'pred_sem_seg_from' in data_sample \
             and 'pred_sem_seg_to' in data_sample):
@@ -127,10 +130,10 @@ class CDLocalVisualizer(SegLocalVisualizer):
                                         'deteaction results.'
             pred_img_data_from = self._draw_sem_seg(pred_img_data_from,
                                              data_sample.pred_sem_seg_from, semantic_classes,
-                                             semantic_palette)
+                                             semantic_palette, with_labels)
             pred_img_data_to = self._draw_sem_seg(pred_img_data_to,
                                              data_sample.pred_sem_seg_to, semantic_classes,
-                                             semantic_palette)
+                                             semantic_palette, with_labels)
 
         if gt_img_data is not None and pred_img_data is not None:
             drawn_img = np.concatenate((gt_img_data, pred_img_data), axis=1)

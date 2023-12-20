@@ -82,9 +82,9 @@ python tools/train.py configs/changer/changer_ex_r18_512x512_40k_levircd.py --wo
 infer
 ```
 # get .png results
-python tools/test.py configs/changer/changer_ex_r18_512x512_40k_levircd.py  changer_r18_levir_workdir/latest.pth --show-dir tmp_infer
+python tools/test.py configs/changer/changer_ex_r18_512x512_40k_levircd.py changer_r18_levir_workdir/latest.pth --show-dir tmp_infer
 # get metrics
-python tools/test.py configs/changer/changer_ex_r18_512x512_40k_levircd.py  changer_r18_levir_workdir/latest.pth
+python tools/test.py configs/changer/changer_ex_r18_512x512_40k_levircd.py changer_r18_levir_workdir/latest.pth
 ```
 
 ## Citation
