@@ -1,3 +1,4 @@
+# Copyright (c) Open-CD. All rights reserved.
 import warnings
 
 from opencd.registry import MODELS

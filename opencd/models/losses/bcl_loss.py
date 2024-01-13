@@ -1,3 +1,4 @@
+# Copyright (c) Open-CD. All rights reserved.
 import torch
 import torch.nn as nn
 
