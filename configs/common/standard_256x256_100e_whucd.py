@@ -99,14 +99,15 @@ optim_wrapper = dict(type='OptimWrapper', optimizer=optimizer)
 # learning policy
 param_scheduler = [
     dict(
-        type='LinearLR', start_factor=1e-6, by_epoch=False, begin=0, end=1500),
+        type='LinearLR', start_factor=1e-6, by_epoch=True, begin=0, end=5, convert_to_iter_based=True),
     dict(
         type='PolyLR',
         power=1.0,
-        begin=1500,
-        end=74400,
+        begin=5,
+        end=100,
         eta_min=0.0,
-        by_epoch=False,
+        by_epoch=True,
+        convert_to_iter_based=True
     )
 ]
 

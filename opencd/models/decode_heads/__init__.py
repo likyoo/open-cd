@@ -5,6 +5,9 @@ from .identity_head import DSIdentityHead, IdentityHead
 from .multi_head import MultiHeadDecoder
 from .sta_head import STAHead
 from .tiny_head import TinyHead
+from .ban_head import BitemporalAdapterHead
+from .ban_utils import BAN_MLPDecoder, BAN_BITHead
 
 __all__ = ['BITHead', 'Changer', 'IdentityHead', 'DSIdentityHead', 'TinyHead',
-           'STAHead', 'MultiHeadDecoder', 'GeneralSCDHead']
+           'STAHead', 'MultiHeadDecoder', 'GeneralSCDHead', 'BitemporalAdapterHead',
+           'BAN_MLPDecoder', 'BAN_BITHead']

@@ -2,5 +2,7 @@
 from .dual_input_encoder_decoder import DIEncoderDecoder
 from .siamencoder_decoder import SiamEncoderDecoder
 from .siamencoder_multidecoder import SiamEncoderMultiDecoder
+from .ban import BAN
 
-__all__ = ['SiamEncoderDecoder', 'DIEncoderDecoder', 'SiamEncoderMultiDecoder']
+__all__ = ['SiamEncoderDecoder', 'DIEncoderDecoder', 'SiamEncoderMultiDecoder',
+           'BAN']

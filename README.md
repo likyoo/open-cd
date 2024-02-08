@@ -37,6 +37,7 @@ Supported change detection model:
 - [x] [Changer (TGRS'2023)](configs/changer)
 - [x] [HANet (JSTARS'2023)](configs/hanet)
 - [x] [TinyCDv2 (Under Review)](configs/tinycd_v2)
+- [x] [BAN (arXiv'2023)](configs/ban)
 - [ ] ...
 
 Supported datasets: | [Descriptions](https://github.com/wenhwu/awesome-remote-sensing-change-detection)
