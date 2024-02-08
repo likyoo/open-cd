@@ -42,7 +42,7 @@ pip install peft
 
 | Method | Backbone  | Crop Size | Lr schd | Precision | Recall | F1-Score | IoU  |                            config                            |
 | :----: | --------- | :-------: | :-----: | :-------: | :----: | :------: | :--: | :----------------------------------------------------------: |
-|  TTP   | ViT-sam-L |  512x512  |  300e   |           |        |          |      | [config](https://github.com/likyoo/open-cd/blob/main/configs/ttp/ttp_vit-sam-l_512x512_300e_levircd.py) |
+|  TTP   | ViT-SAM-L |  512x512  |  300e   |           |        |          |      | [config](https://github.com/likyoo/open-cd/blob/main/configs/ttp/ttp_vit-sam-l_512x512_300e_levircd.py) |
 
 
 - All metrics are based on the category "change".
