@@ -1,6 +1,6 @@
 # TTP
 
-Time Travelling Pixels: Bitemporal Features Integration with Foundation Model for Remote Sensing Image Change Detection
+[Time Travelling Pixels: Bitemporal Features Integration with Foundation Model for Remote Sensing Image Change Detection](https://arxiv.org/abs/2312.16202)
 
 ## Introduction
 
@@ -42,7 +42,7 @@ pip install peft
 
 | Method | Backbone  | Crop Size | Lr schd | Precision | Recall | F1-Score | IoU  |                            config                            |
 | :----: | --------- | :-------: | :-----: | :-------: | :----: | :------: | :--: | :----------------------------------------------------------: |
-|  TTP   | ViT-SAM-L |  512x512  |  300e   |           |        |          |      | [config](https://github.com/likyoo/open-cd/blob/main/configs/ttp/ttp_vit-sam-l_512x512_300e_levircd.py) |
+|  TTP   | ViT-SAM-L |  512x512  |  300e   |   93.0    |  91.7  |   92.1   | 85.6 | [config](https://github.com/likyoo/open-cd/blob/main/configs/ttp/ttp_vit-sam-l_512x512_300e_levircd.py) |
 
 
 - All metrics are based on the category "change".

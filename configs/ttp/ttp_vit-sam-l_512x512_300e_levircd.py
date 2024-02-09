@@ -54,3 +54,4 @@ param_scheduler = [
 ]
 
 train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=max_epochs, val_interval=5)
+default_hooks = dict(checkpoint=dict(interval=5))

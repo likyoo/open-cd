@@ -54,7 +54,7 @@ class TimeFusionTransformerEncoderLayer(BaseModule):
             dropout_layer=dict(type='DropPath', drop_prob=drop_path_rate),
             act_cfg=act_cfg)
 
-        if self.window_size > 0:
+        if self.window_size > 0: # TODO: Maybe it should be ``self.window_size == 0`` here.
             in_channels = embed_dims * 2
             self.down_channel = torch.nn.Conv2d(in_channels, 1, kernel_size=1, stride=1, bias=False)
             self.down_channel.weight.data.fill_(1.0 / in_channels)
@@ -89,7 +89,7 @@ class TimeFusionTransformerEncoderLayer(BaseModule):
 
         x = self.ffn(self.ln2(x), identity=x)
         # time phase fusion
-        if self.window_size > 0:
+        if self.window_size > 0: # TODO: Maybe it should be ``self.window_size == 0`` here.
             x = einops.rearrange(x, 'b h w d -> b d h w')  # 2B, C, H, W
             x0 = x[:x.size(0)//2]
             x1 = x[x.size(0)//2:]  # B, C, H, W

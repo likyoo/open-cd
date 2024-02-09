@@ -1,6 +1,5 @@
 # model settings
 norm_cfg = dict(type='SyncBN', requires_grad=True)
-bit_norm_cfg = dict(type='LN', requires_grad=True)
 fpn_norm_cfg = dict(type='mmpretrain.LN2d', requires_grad=True)
 data_preprocessor = dict(
     type='DualInputSegDataPreProcessor',
