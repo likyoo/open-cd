@@ -20,6 +20,9 @@ class TinyFPN(BaseModule):
         num_outs (int): Number of output scales.
         exist_early_x (bool): If True, the first feature in `inputs` will be
             ignored and placed at the 0 index of the `output`. Default to False.
+        early_x_for_fpn (bool): Valid only when `exist_early_x` is True. 
+            If True, the first feature in `inputs` will be used for FPN.
+            Default to False.
         start_level (int): Index of the start input backbone level used to
             build the feature pyramid. Default: 0.
         end_level (int): Index of the end input backbone level (exclusive) to
@@ -67,7 +70,9 @@ class TinyFPN(BaseModule):
                  in_channels,
                  out_channels,
                  num_outs,
+                 custom_block='tinyblock',
                  exist_early_x=False,
+                 early_x_for_fpn=False,
                  start_level=0,
                  end_level=-1,
                  add_extra_convs=False,
@@ -91,6 +96,10 @@ class TinyFPN(BaseModule):
         self.fp16_enabled = False
         self.upsample_cfg = upsample_cfg.copy()
         self.exist_early_x = exist_early_x
+        self.early_x_for_fpn = early_x_for_fpn
+        self.custom_block = custom_block
+
+        assert custom_block in ['tinyblock', 'conv']
 
         if end_level == -1:
             self.backbone_end_level = self.num_ins
@@ -127,11 +136,22 @@ class TinyFPN(BaseModule):
                 norm_cfg=norm_cfg if not self.no_norm_on_lateral else None,
                 act_cfg=act_cfg,
                 inplace=False)
-            fpn_conv = TinyBlock(
-                in_channels=out_channels,
-                out_channels=out_channels,
-                stride=1,
-                expand_ratio=1)
+            if custom_block == 'tinyblock':
+                fpn_conv = TinyBlock(
+                    in_channels=out_channels,
+                    out_channels=out_channels,
+                    stride=1,
+                    expand_ratio=1)
+            else:
+                fpn_conv = ConvModule(
+                    out_channels,
+                    out_channels,
+                    3,
+                    padding=1,
+                    conv_cfg=conv_cfg,
+                    norm_cfg=norm_cfg,
+                    act_cfg=act_cfg,
+                    inplace=False)
 
             self.lateral_convs.append(l_conv)
             self.fpn_convs.append(fpn_conv)
@@ -144,17 +164,31 @@ class TinyFPN(BaseModule):
                     in_channels = self.in_channels[self.backbone_end_level - 1]
                 else:
                     in_channels = out_channels
-                extra_fpn_conv = TinyBlock(
-                    in_channels=in_channels,
-                    out_channels=out_channels,
-                    stride=2,
-                    expand_ratio=1)
+                if custom_block == 'tinyblock':
+                    extra_fpn_conv = TinyBlock(
+                        in_channels=in_channels,
+                        out_channels=out_channels,
+                        stride=2,
+                        expand_ratio=1)
+                else:
+                    extra_fpn_conv = ConvModule(
+                        in_channels,
+                        out_channels,
+                        3,
+                        stride=2,
+                        padding=1,
+                        conv_cfg=conv_cfg,
+                        norm_cfg=norm_cfg,
+                        act_cfg=act_cfg,
+                        inplace=False)
                 self.fpn_convs.append(extra_fpn_conv)
 
     def forward(self, inputs):
         if self.exist_early_x:
             early_x = inputs[0]
-            inputs = inputs[1:]
+            if not self.early_x_for_fpn:
+                assert len(inputs) == len(self.in_channels) + 1
+                inputs = inputs[1:]
 
         assert len(inputs) == len(self.in_channels)
 

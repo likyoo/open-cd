@@ -9,8 +9,10 @@ from .tinynet import TinyNet
 from .hanet import HAN
 from .vit_tuner import VisionTransformerTurner
 from .vit_sam import ViTSAM_Custom
+from .lightcdnet import LightCDNet
 
 __all__ = ['IA_ResNetV1c', 'IA_ResNeSt', 'FC_EF', 'FC_Siam_diff', 
            'FC_Siam_conc', 'SNUNet_ECAM', 'TinyCD', 'IFN',
            'TinyNet', 'IA_MixVisionTransformer', 'HAN',
-           'VisionTransformerTurner', 'ViTSAM_Custom']
+           'VisionTransformerTurner', 'ViTSAM_Custom',
+           'LightCDNet']
