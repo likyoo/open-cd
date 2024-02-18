@@ -38,7 +38,7 @@ Supported change detection model:
 - [x] [HANet (JSTARS'2023)](configs/hanet)
 - [x] [TinyCDv2 (Under Review)](configs/tinycd_v2)
 - [x] [LightCDNet (GRSL'2023)](configs/lightcdnet)
-- [x] [BAN (arXiv'2023)](configs/ban)
+- [x] [BAN (TGRS'2024)](configs/ban)
 - [x] [TTP (arXiv'2023)](configs/ttp)
 - [ ] ...
 
