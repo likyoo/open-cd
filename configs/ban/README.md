@@ -1,8 +1,10 @@
 # BAN
 
-[A New Learning Paradigm for Foundation Model-based Remote Sensing Change Detection]()
+[A New Learning Paradigm for Foundation Model-based Remote Sensing Change Detection](https://arxiv.org/abs/2312.01163)
 
 ## Introduction
+
+[Official Repo](https://github.com/likyoo/BAN)
 
 [Code Snippet](https://github.com/likyoo/open-cd/blob/main/opencd/models/decode_heads/ban_head.py)
 
