@@ -1,7 +1,13 @@
 # Copyright (c) Open-CD. All rights reserved.
 from mmengine.model import BaseModule
 from mmengine.dist import is_main_process
-from peft import get_peft_config, get_peft_model
+try:
+    from peft import get_peft_config, get_peft_model
+    PEFT_INSTALLED = True
+except:
+    get_peft_config = None
+    get_peft_model = None
+    PEFT_INSTALLED = False
 
 from opencd.registry import MODELS
 
@@ -14,6 +20,13 @@ class VisionTransformerTurner(BaseModule):
         peft_cfg=None,
         init_cfg=None,
     ):
+        if not PEFT_INSTALLED:
+            raise ImportError(
+                'peft is not installed, '
+                'we suggest install peft by '
+                '"pip install peft"'  # noqa
+            )
+        
         super().__init__(init_cfg=init_cfg)
         vision_encoder = MODELS.build(encoder_cfg)
         vision_encoder.init_weights()
