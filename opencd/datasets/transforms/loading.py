@@ -382,10 +382,10 @@ class MultiImgLoadLoadImageFromNDArray(MultiImgLoadImageFromFile):
         """
 
         imgs = []
-        if self.to_float32:
-            for img in results['img']:
+        for img in results["img"]:
+            if self.to_float32:
                 img = img.astype(np.float32)
-                imgs.append(img)
+            imgs.append(img)
 
         results['img_path'] = None
         results['img'] = imgs
