@@ -1,9 +1,10 @@
 # STANet
 
-[A Spatial-Temporal Attention-Based Method and a New Dataset for Remote Sensing Image Change Detection](https://www.mdpi.com/2072-4292/14/13/3100)
+[A Spatial-Temporal Attention-Based Method and a New Dataset for Remote Sensing Image Change Detection](https://www.mdpi.com/2072-4292/12/10/1662)
 
 ## Introduction
 
+[Official Repo](https://github.com/justchenhao/STANet)
 [Code Snippet](https://github.com/likyoo/open-cd/blob/main/opencd/models/decode_heads/sta_head.py)
 
 ## Abstract
