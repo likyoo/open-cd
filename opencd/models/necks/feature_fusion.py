@@ -13,7 +13,7 @@ class FeatureFusionNeck(BaseModule):
 
     Args:
         policy (str): The operation to fuse features. candidates 
-            are `concat`, `sum`, `diff` and `Lp_distance`.
+            are `concat`, `sum`, `diff` and `abs_diff`.
         in_channels (Sequence(int)): Input channels.
         channels (int): Channels after modules, before conv_seg.
         out_indices (tuple[int]): Output from which layer.
