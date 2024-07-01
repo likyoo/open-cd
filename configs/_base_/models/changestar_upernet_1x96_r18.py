@@ -29,7 +29,7 @@ model = dict(
         contract_dilation=True),
     neck=dict(type='FeatureFusionNeck', policy='concat'),
     decode_head=dict(
-        type='ChangeStar',
+        type='ChangeStarHead',
         inference_mode='t1t2',
         in_channels=[1, 1, 1, 1], # useless, placeholder
         in_index=[0, 1, 2, 3],

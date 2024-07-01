@@ -76,7 +76,7 @@ class ChangeMixin(BaseModule):
 
 
 @MODELS.register_module()
-class ChangeStar(BaseDecodeHead):
+class ChangeStarHead(BaseDecodeHead):
     """The Head of ChangeStar.
 
     This head is the implementation of
@@ -84,7 +84,7 @@ class ChangeStar(BaseDecodeHead):
 
     Args:
         inference_mode: inference mode of ChangeStar, candidates 
-            are `t1t2`, `t2t1`, and `mean`. Default: 'bilinear'.
+            are `t1t2`, `t2t1`, and `mean`. Default: 't1t2'.
         seg_head_cfg: config for segmentation head.
         changemixin_cfg: config for ChangeMixin.
     """
@@ -213,6 +213,8 @@ class ChangeStar(BaseDecodeHead):
             seg_logits = seg_logits[1]
         elif self.inference_mode == 'mean':
             seg_logits = (seg_logits[0] + seg_logits[1]) / 2.0
+        else:
+            raise ValueError(f"Invalid inference_mode: {self.inference_mode}")
         
         seg_logits = resize(
             input=seg_logits,

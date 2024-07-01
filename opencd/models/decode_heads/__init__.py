@@ -9,10 +9,10 @@ from .ban_head import BitemporalAdapterHead
 from .ban_utils import BAN_MLPDecoder, BAN_BITHead
 from .mlpseg_head import MLPSegHead
 from .ds_fpn_head import DS_FPNHead
-from .changerstar import ChangeStar
+from .changerstar_head import ChangeStarHead
 from .farseg_head import FarSegHead
 
 __all__ = ['BITHead', 'Changer', 'IdentityHead', 'DSIdentityHead', 'TinyHead',
            'STAHead', 'MultiHeadDecoder', 'GeneralSCDHead', 'BitemporalAdapterHead',
            'BAN_MLPDecoder', 'BAN_BITHead', 'MLPSegHead', 'DS_FPNHead', 
-           'ChangeStar', 'FarSegHead']
+           'ChangeStarHead', 'FarSegHead']
