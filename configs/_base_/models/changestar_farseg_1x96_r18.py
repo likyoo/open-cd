@@ -56,8 +56,9 @@ model = dict(
             inner_channels=96, # d_c
             num_convs=1, # N
             ),
-        loss_decode=dict(
-            type='mmseg.CrossEntropyLoss', use_sigmoid=True, loss_weight=1.0)),
+        loss_decode=[
+        dict(type='mmseg.CrossEntropyLoss', use_sigmoid=True, loss_name='loss_ce', loss_weight=1.0),
+        dict(type='mmseg.DiceLoss', use_sigmoid=True, loss_name='loss_dice', loss_weight=1.0)]),
     # model training and testing settings
     train_cfg=dict(),
     test_cfg=dict(mode='whole'))

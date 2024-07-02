@@ -34,10 +34,9 @@ For high spatial resolution (HSR) remote sensing images, bitemporal supervised l
 
 |   Method   | Backbone | Crop Size | Lr schd | Mem (GB) | Precision | Recall | F1-Score |  IoU  |                            config                            | download |
 | :--------: | :------: | :-------: | :-----: | :------: | :-------: | :----: | :------: | :---: | :----------------------------------------------------------: | :------: |
-| ChangeStar |   r18    |  512x512  |  40000  |    -     |   95.4    | 84.17  |  89.43   | 80.89 | [config](https://github.com/likyoo/open-cd/blob/main/configs/changestar/changestar_farseg_1x96_512x512_40k_levircd.py) |          |
+| ChangeStar |   r18    |  512x512  |  40000  |    -     |   93.75    | 88.90  |  91.26   | 83.92 | [config](https://github.com/likyoo/open-cd/blob/main/configs/changestar/changestar_farseg_1x96_512x512_40k_levircd.py) |          |
 
 
-- Hyper-parameters of ChangeStar are not carefully tuned.
 - All metrics are based on the category "change".
 - All scores are computed on the test set.
 
