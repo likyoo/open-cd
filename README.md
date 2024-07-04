@@ -7,6 +7,7 @@ Open-CD is an open source change detection toolbox based on a series of open sou
 
 
 ## News
+- 6/29/2024 - [ChangeStar](https://github.com/Z-Zheng/ChangeStar) and [FarSeg](https://github.com/Z-Zheng/FarSeg) are supported.
 - 6/20/2024 - We launch the **[Open-CD Technical Report Plan](https://github.com/likyoo/open-cd/tree/main/projects/open-cd_technical_report)**, don't hesitate to join us!!! 💥💥💥
 - 6/17/2024 - [CGNet](https://github.com/ChengxiHAN/CGNet-CD) is supported.
 - 2/10/2024 - Open-CD is upgraded to v1.1.0. [BAN](https://github.com/likyoo/BAN), [TTP](https://github.com/KyanChen/TTP) and [LightCDNet](https://github.com/NightSongs/LightCDNet) is supported. The inference API is added.
@@ -35,15 +36,16 @@ Supported change detection model:
 - [x] [IFN (ISPRS'2020)](configs/ifn)
 - [x] [SNUNet (GRSL'2021)](configs/snunet)
 - [x] [BiT (TGRS'2021)](configs/bit)
+- [x] [ChangeStar (ICCV'2021)](configs/changestar)
 - [x] [ChangeFormer (IGARSS'22)](configs/changeformer)
 - [x] [TinyCD (NCA'2023)](configs/tinycd)
 - [x] [Changer (TGRS'2023)](configs/changer)
 - [x] [HANet (JSTARS'2023)](configs/hanet)
 - [x] [TinyCDv2 (Under Review)](configs/tinycd_v2)
 - [x] [LightCDNet (GRSL'2023)](configs/lightcdnet)
+- [x] [CGNet (JSTARS'2023)](configs/cgnet)
 - [x] [BAN (TGRS'2024)](configs/ban)
 - [x] [TTP (arXiv'2023)](configs/ttp)
-- [x] [CGNet (JSTARS'2023)](configs/cgnet)
 - [ ] ...
 
 Supported datasets: | [Descriptions](https://github.com/wenhwu/awesome-remote-sensing-change-detection)
