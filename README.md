@@ -67,7 +67,8 @@ Please refer to [get_started.md](https://github.com/open-mmlab/mmsegmentation/bl
 
 A Colab tutorial is also provided. You may directly run on [Colab](https://colab.research.google.com/drive/1puZY5R8fwlL6um6pHbgbM1NTYZUXdK2J?usp=sharing). (thanks to [@Agustin](https://github.com/AgustinNormand) for this demo) [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1puZY5R8fwlL6um6pHbgbM1NTYZUXdK2J?usp=sharing)
 
-#### simple usage
+#### Install
+
 ```
 # Install OpenMMLab Toolkits as Python packages
 pip install -U openmim
@@ -82,17 +83,24 @@ git clone https://github.com/likyoo/open-cd.git
 cd open-cd
 pip install -v -e .
 ```
-train
+For more details, please see [here](https://github.com/likyoo/open-cd/blob/main/docs/install.md).
+
+#### Train
 ```
 python tools/train.py configs/changer/changer_ex_r18_512x512_40k_levircd.py --work-dir ./changer_r18_levir_workdir
 ```
-infer
+
+#### Test
 ```
 # get .png results
 python tools/test.py configs/changer/changer_ex_r18_512x512_40k_levircd.py changer_r18_levir_workdir/latest.pth --show-dir tmp_infer
 # get metrics
 python tools/test.py configs/changer/changer_ex_r18_512x512_40k_levircd.py changer_r18_levir_workdir/latest.pth
 ```
+
+#### Infer
+Please refer [inference](https://github.com/likyoo/open-cd/blob/main/docs/inference.md) doc.
+
 
 ## Citation
 
