@@ -43,7 +43,7 @@ class ChangeGuideModule(nn.Module):
     def forward(self, x, guiding_map0):
         m_batchsize, C, height, width = x.size()
         guiding_map0 = F.interpolate(guiding_map0, x.size()[2:], mode='bilinear', align_corners=True)
-        guiding_map = F.sigmoid(guiding_map0)
+        guiding_map = torch.sigmoid(guiding_map0)
 
         query = self.query_conv(x) * (1 + guiding_map)
         proj_query = query.view(m_batchsize, -1, width*height).permute(0, 2, 1)

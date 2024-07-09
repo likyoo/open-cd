@@ -73,7 +73,7 @@ class ChannelAttention(nn.Module):
         avg_out = self.fc2(self.fc1(self.avg_pool(x)))
         max_out = self.fc2(self.fc1(self.max_pool(x)))
         out = avg_out + max_out
-        return F.sigmoid(out)
+        return torch.sigmoid(out)
 
 
 class SpatialAttention(nn.Module):
@@ -86,7 +86,7 @@ class SpatialAttention(nn.Module):
         max_out = torch.max(x, dim=1, keepdim=True)[0]
         x = torch.cat([avg_out, max_out], dim=1)
         x = self.conv(x)
-        return F.sigmoid(x)
+        return torch.sigmoid(x)
 
 
 class VGG16FeaturePicker(nn.Module):
