@@ -37,7 +37,7 @@ We are launching an interesting project - Open-CD Technical Report Plan (**Open-
 
 ### Join us !
 
-If you want to contribute to this project or have any suggestions, don't hesitate to join our WeChat group or contact me directly via WeChat (``likyoo7``) or email.
+If you want to contribute to this project or have any suggestions, don't hesitate to join our WeChat group or contact me directly via WeChat (``likyoo7``) or email. (微信请务必备注 姓名+单位+Open-CD TRP)
 
 ------
 
