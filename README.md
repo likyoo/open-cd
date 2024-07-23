@@ -2,11 +2,20 @@
   <img src="resources/opencd-logo.png" width="600"/>
 </div>
 
+------
+
+<div align="center">
+<a href="https://arxiv.org/abs/2407.15317"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Farxiv.org%2Fabs%2F2407.15317&count_bg=%23FF0000&title_bg=%23555555&icon=arxiv.svg&icon=&icon_color=%23E7E7E7&title=Technical+Report&edge_flat=false"/></a>
+<a href="https://github.com/likyoo/open-cd"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Flikyoo%2Fopen-cdA&count_bg=%2379C83D&title_bg=%23555555&icon=github.svg&icon_color=%23E7E7E7&title=Github&edge_flat=false"/></a>
+<a href="https://huggingface.co/likyoo/Open-CD_Model_Zoo"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fhuggingface.co%2Flikyoo%2FOpen-CD_Model_Zoo&count_bg=%23684BD3&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=%F0%9F%A4%97%20Hugging%20Face&edge_flat=false"/></a>
+</div>
+
 ## Introduction
 Open-CD is an open source change detection toolbox based on a series of open source general vision task tools.
 
 
 ## News
+- 7/23/2024 - **Open-CD Technical Report v1.0 is released on [arXiv](https://arxiv.org/abs/2407.15317), thanks to all contributors! Feel free to join us!** 💥💥💥
 - 6/29/2024 - [ChangeStar](https://github.com/Z-Zheng/ChangeStar) and [FarSeg](https://github.com/Z-Zheng/FarSeg) are supported.
 - 6/20/2024 - We launch the **[Open-CD Technical Report Plan](https://github.com/likyoo/open-cd/tree/main/projects/open-cd_technical_report)**, don't hesitate to join us!!! 💥💥💥
 - 6/17/2024 - [CGNet](https://github.com/ChengxiHAN/CGNet-CD) is supported.
@@ -106,7 +115,18 @@ Please refer [inference](https://github.com/likyoo/open-cd/blob/main/docs/infere
 
 ## Citation
 
-If you find this project useful in your research, please consider cite:
+If you find this project useful in your research, please cite:
+
+```bibtex
+@article{opencd,
+  title   = {{Open-CD}: A Comprehensive Toolbox for Change Detection},
+  author  = {Li, Kaiyu and Jiang, Jiawei and Codegoni, Andrea and Han, Chengxi and Deng, Yupeng and Chen, Keyan and Zheng, Zhuo and
+             Chen, Hao and Zou, Zhengxia and Shi, Zhenwei and Fang, Sheng and Meng, Deyu and Wang, Zhi and Cao, Xiangyong},
+  journal= {arXiv preprint arXiv:2407.15317},
+  year={2024}
+}
+```
+You might also consider citing:
 
 ```bibtex
 @ARTICLE{10438490,
