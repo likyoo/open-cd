@@ -11,8 +11,8 @@ class Landsat_Dataset(BaseSCDDataset):
         palette=[[0, 0, 0], [255, 255, 255]],
         semantic_classes=('unchanged', 'farmland', 'desert', 
                           'building', 'water'),
-        semantic_palette=[[255, 255, 255], [128, 128, 128], [130, 87, 87], 
-                          [255, 0, 0], [0, 0, 255]])
+        semantic_palette=[[255, 255, 255], [0, 155, 0], [255, 165, 0], 
+                          [230, 30, 100],[0, 170, 240]])
 
     def __init__(self,
                  img_suffix='.png',
