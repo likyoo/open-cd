@@ -23,9 +23,9 @@ class DistillLoss(nn.Module):
     """Knowledge Distillation Loss"""
 
     def __init__(self, 
-                 temperature=1.0,         # 温度参数，用于调节教师模型输出的平滑度
-                 loss_weight=1.0,         # 蒸馏损失权重
-                 loss_name='distill_loss', # 损失项名称
+                 temperature=1.0,         
+                 loss_weight=1.0,         
+                 loss_name='distill_loss',
                  **kwargs):
         super().__init__()
         self.temperature = temperature
@@ -37,24 +37,24 @@ class DistillLoss(nn.Module):
                 teacher_pred, 
                 **kwargs):
         """
-        计算学生模型和教师模型输出之间的KL散度蒸馏损失。
+        Compute the KL divergence distillation loss between the outputs of the student and teacher models.
         
         Args:
-            student_pred (Tensor): 学生模型的预测输出 (N, C, H, W)。
-            teacher_pred (Tensor): 教师模型的预测输出 (N, C, H, W)。
+            student_pred (Tensor): Predicted output of the student model (N, C, H, W).
+            teacher_pred (Tensor): Predicted output of the teacher model (N, C, H, W).
 
         Returns:
-            Tensor: 计算得到的蒸馏损失。
+            Tensor: The computed distillation loss.
         """
-        # 将学生和教师模型的输出进行 softmax 归一化
+        # Normalize the outputs of the student and teacher models using softmax
         student_logits = nn.functional.log_softmax(student_pred / self.temperature, dim=1)
         teacher_logits = nn.functional.softmax(teacher_pred / self.temperature, dim=1)
 
-        # 使用 KL 散度计算学生与教师的输出差异
+        # Compute the difference between student and teacher outputs using KL divergence
         distill_loss = nn.functional.kl_div(
             student_logits, teacher_logits, reduction='batchmean') * (self.temperature ** 2)
 
-        # 加权损失
+        # Weighted loss
         num_elements = student_logits.numel()
         # loss = self.loss_weight / num_elements * distill_loss
         loss = self.loss_weight * distill_loss
@@ -62,14 +62,14 @@ class DistillLoss(nn.Module):
 
     @property
     def loss_name(self):
-        """返回损失项的名称。"""
+        """Return the name of the loss term."""
         return self._loss_name
     
     
 @MODELS.register_module()
-# 新的蒸馏损失模块
+# New distillation loss module
 class DistillLossWithPixel(nn.Module):
-    """改进版知识蒸馏损失，包含像素级和类别级蒸馏。"""
+    """Improved knowledge distillation loss, including pixel-level and class-level distillation."""
 
     def __init__(self, temperature=1.0, loss_weight=1.0, pixel_weight=1.0, loss_name='distill_loss', **kwargs):
         super().__init__()
@@ -79,30 +79,30 @@ class DistillLossWithPixel(nn.Module):
         self._loss_name = loss_name
 
     def forward(self, student_pred, teacher_pred, **kwargs):
-        # 类别级蒸馏
+        # Class-level distillation
         student_logits = nn.functional.log_softmax(student_pred / self.temperature, dim=1)
         teacher_logits = nn.functional.softmax(teacher_pred / self.temperature, dim=1)
         class_distill_loss = nn.functional.kl_div(
             student_logits, teacher_logits, reduction='batchmean') * (self.temperature ** 2)
 
-        # 像素级蒸馏
+        # Pixel-level distillation
         pixel_distill_loss = nn.functional.mse_loss(student_pred, teacher_pred)
 
-        # 综合蒸馏损失
+        # Combined distillation loss
         total_loss = (self.loss_weight * class_distill_loss +
                       self.pixel_weight * pixel_distill_loss)
         return total_loss
 
     @property
     def loss_name(self):
-        """返回损失项的名称。"""
+        """Return the name of the loss term."""
         return self._loss_name
 
 
 @MODELS.register_module()
-# 新的蒸馏损失模块
+# New distillation loss module
 class DistillLossWithPixel_ChangeStar(nn.Module):
-    """改进版知识蒸馏损失，包含像素级和类别级蒸馏。"""
+    """Improved knowledge distillation loss, including pixel-level and class-level distillation."""
 
     def __init__(self, temperature=1.0, loss_weight=1.0, pixel_weight=1.0, loss_name='distill_loss', **kwargs):
         super().__init__()
@@ -114,21 +114,21 @@ class DistillLossWithPixel_ChangeStar(nn.Module):
     def forward(self, student_pred, teacher_pred, **kwargs):
         student_pred = torch.cat([student_pred[0], student_pred[1]], dim=0)
         teacher_pred = torch.cat([teacher_pred[0], teacher_pred[1]], dim=0)
-        # 类别级蒸馏
+        # Class-level distillation
         student_logits = nn.functional.log_softmax(student_pred / self.temperature, dim=1)
         teacher_logits = nn.functional.softmax(teacher_pred / self.temperature, dim=1)
         class_distill_loss = nn.functional.kl_div(
             student_logits, teacher_logits, reduction='batchmean') * (self.temperature ** 2)
 
-        # 像素级蒸馏
+        # Pixel-level distillation
         pixel_distill_loss = nn.functional.mse_loss(student_pred, teacher_pred)
 
-        # 综合蒸馏损失
+        # Combined distillation loss
         total_loss = (self.loss_weight * class_distill_loss +
                       self.pixel_weight * pixel_distill_loss)
         return total_loss
 
     @property
     def loss_name(self):
-        """返回损失项的名称。"""
+        """Return the name of the loss term."""
         return self._loss_name
