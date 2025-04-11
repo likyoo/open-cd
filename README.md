@@ -55,6 +55,7 @@ Supported change detection model:
 - [x] [CGNet (JSTARS'2023)](configs/cgnet)
 - [x] [BAN (TGRS'2024)](configs/ban)
 - [x] [TTP (arXiv'2023)](configs/ttp)
+- [x] [MTKD (arXiv'2025)](configs/mtkd)
 - [ ] ...
 
 Supported datasets: | [Descriptions](https://github.com/wenhwu/awesome-remote-sensing-change-detection)
@@ -68,6 +69,7 @@ Supported datasets: | [Descriptions](https://github.com/wenhwu/awesome-remote-se
 - [x] [SECOND](http://www.captain-whu.com/PROJECT/)
 - [x] [Landsat](https://figshare.com/articles/figure/Landsat-SCD_dataset_zip/19946135/1)
 - [x] [BANDON](https://github.com/fitzpchao/BANDON)
+- [x] [JL1-CD](https://github.com/circleLZY/MTKD-CD)
 - [ ] ...
 
 ## Usage

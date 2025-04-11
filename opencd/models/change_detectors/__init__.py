@@ -4,6 +4,8 @@ from .siamencoder_decoder import SiamEncoderDecoder
 from .siamencoder_multidecoder import SiamEncoderMultiDecoder
 from .ban import BAN
 from .ttp import TimeTravellingPixels
+from .mtkd import DistillSiamEncoderDecoder, DistillSiamEncoderDecoder_ChangeStar, DistillDIEncoderDecoder_S, DistillBAN, DistillTimeTravellingPixels
 
 __all__ = ['SiamEncoderDecoder', 'DIEncoderDecoder', 'SiamEncoderMultiDecoder',
-           'BAN', 'TimeTravellingPixels']
+           'BAN', 'TimeTravellingPixels', 
+           'DistillSiamEncoderDecoder', 'DistillSiamEncoderDecoder_ChangeStar', 'DistillDIEncoderDecoder_S', 'DistillBAN', 'DistillTimeTravellingPixels']
