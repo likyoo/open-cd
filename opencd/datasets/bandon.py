@@ -7,7 +7,7 @@ from .basescddataset import BaseSCDDataset
 class BANDON_Dataset(BaseSCDDataset):
     """BANDON dataset
     
-    Note: Use `tools/generate_txt/generate_bandon_txt.py` 
+    Note: Use `tools/dataset_converters/generate_bandon_txt.py` 
         to generate .txt files for BANDON dataset
     
     """

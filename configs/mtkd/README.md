@@ -48,7 +48,13 @@ Run the following command to train the original model:
 python tools/train.py configs/mtkd/step1/initial-changer_ex_mit-b0_512x512_200k_jl1cd.py --work-dir /path/to/save/models/Changer-mit-b0/initial
 ```
 
-#### Step 2: Train teacher models for different CAR partitions (e.g., 3 partitions)
+#### Step 2: Train teacher models for different Change Area Ratio (CAR) partitions (e.g., 3 partitions)
+
+Split the data according to CAR:
+
+```bash
+python tools/dataset_converters/split_data_with_car.py
+```
 
 Train the teacher models for small, medium, and large CAR partitions as follows:
 

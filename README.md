@@ -15,6 +15,7 @@ Open-CD is an open source change detection toolbox based on a series of open sou
 
 
 ## News
+- 4/11/2025 - [MTKD](https://github.com/circleLZY/MTKD-CD) method and [JL1-CD](https://github.com/circleLZY/MTKD-CD) dataset are supported. Open-CD Technical Report is updated to v1.1.
 - 7/23/2024 - **Open-CD Technical Report v1.0 is released on [arXiv](https://arxiv.org/abs/2407.15317), thanks to all contributors! Feel free to join us!** 💥💥💥
 - 6/29/2024 - [ChangeStar](https://github.com/Z-Zheng/ChangeStar) and [FarSeg](https://github.com/Z-Zheng/FarSeg) are supported.
 - 6/20/2024 - We launch the **[Open-CD Technical Report Plan](https://github.com/likyoo/open-cd/tree/main/projects/open-cd_technical_report)**, don't hesitate to join us!!! 💥💥💥
