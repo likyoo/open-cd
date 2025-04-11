@@ -1,7 +1,7 @@
 _base_ = [
     '../../_base_/models/hanet.py',
     '../../common/standard_512x512_200k_jl1cd.py']
-dataset_type = 'LEVIR_CD_Dataset'
+dataset_type = 'JL1_CD_Dataset'
 data_root = 'data/JL1-CD'
 
 crop_size = (512, 512)

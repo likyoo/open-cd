@@ -22,7 +22,7 @@ distill_loss = dict(
 base_channels = 16
 
 model = dict(
-    type='DistillDIEncoderDecoder_S',
+    type='DistillDIEncoderDecoder',
     distill_loss=distill_loss, 
     data_preprocessor=data_preprocessor,
     pretrained=None,

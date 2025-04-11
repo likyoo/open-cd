@@ -1,6 +1,6 @@
 _base_ = '../_base_/default_runtime.py'
 
-dataset_type = 'LEVIR_CD_Dataset'
+dataset_type = 'JL1_CD_Dataset'
 data_root = 'data/JL1-CD'
 
 crop_size = (512, 512)
@@ -68,9 +68,9 @@ val_dataloader = dict(
         type=dataset_type,
         data_root=data_root,
         data_prefix=dict(
-            seg_map_path='val/label',
-            img_path_from='val/A',
-            img_path_to='val/B'),
+            seg_map_path='test/label',
+            img_path_from='test/A',
+            img_path_to='test/B'),
         pipeline=test_pipeline))
 test_dataloader = dict(
     batch_size=1,

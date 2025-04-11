@@ -157,7 +157,6 @@ class DistillSiamEncoderDecoder_ChangeStar(SiamEncoderDecoder):
                  init_cfg_t_m: OptMultiConfig = None,
                  init_cfg_t_s: OptMultiConfig = None,
                  ):
-        # 调用父类 DIEncoderDecoder 的初始化
         super().__init__(
             backbone=backbone,
             decode_head=decode_head,
@@ -353,11 +352,14 @@ class DistillBAN(BAN):
 
             with torch.no_grad():  
                 if change_area_ratio < 0.05:
-                    teacher_output = self.teacher_s.decode_head.forward([img_from[i:i+1], img_to[i:i+1], self.teacher_s.extract_feat(img_from[i:i+1]), self.teacher_s.extract_feat(img_to[i:i+1])])
+                    teacher_output = self.teacher_s.decode_head.forward(
+                        [img_from[i:i+1], img_to[i:i+1], self.teacher_s.extract_feat(img_from[i:i+1]), self.teacher_s.extract_feat(img_to[i:i+1])])
                 elif change_area_ratio < 0.2:
-                    teacher_output = self.teacher_m.decode_head.forward([img_from[i:i+1], img_to[i:i+1], self.teacher_m.extract_feat(img_from[i:i+1]), self.teacher_m.extract_feat(img_to[i:i+1])])
+                    teacher_output = self.teacher_m.decode_head.forward(
+                        [img_from[i:i+1], img_to[i:i+1], self.teacher_m.extract_feat(img_from[i:i+1]), self.teacher_m.extract_feat(img_to[i:i+1])])
                 else:
-                    teacher_output = self.teacher_l.decode_head.forward([img_from[i:i+1], img_to[i:i+1], self.teacher_l.extract_feat(img_from[i:i+1]), self.teacher_l.extract_feat(img_to[i:i+1])])
+                    teacher_output = self.teacher_l.decode_head.forward(
+                        [img_from[i:i+1], img_to[i:i+1], self.teacher_l.extract_feat(img_from[i:i+1]), self.teacher_l.extract_feat(img_to[i:i+1])])
 
             teacher_outputs.append(teacher_output)
 
@@ -443,7 +445,6 @@ class DistillTimeTravellingPixels(TimeTravellingPixels):
 
 
     def loss(self, inputs: Tensor, data_samples: SampleList) -> dict:
-        # 经典交叉熵等损失
         x_s = self.extract_feat(inputs)
         
         losses = dict()
@@ -482,7 +483,7 @@ class DistillTimeTravellingPixels(TimeTravellingPixels):
 
 
 @MODELS.register_module()
-class DistillDIEncoderDecoder_S(DIEncoderDecoder):
+class DistillDIEncoderDecoder(DIEncoderDecoder):
     def __init__(self,
                  distill_loss,              
                  backbone: ConfigType,

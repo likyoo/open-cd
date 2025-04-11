@@ -6,7 +6,7 @@ optimizer=dict(
     type='AdamW', lr=0.001, betas=(0.9, 0.999), weight_decay=0.01)
 optim_wrapper = dict(type='OptimWrapper', optimizer=optimizer)
 
-dataset_type = 'LEVIR_CD_Dataset'
+dataset_type = 'JL1_CD_Dataset'
 data_root = 'data/JL1-CD'
 
 crop_size = (512, 512)

@@ -2,7 +2,7 @@ _base_ = './small-changer_ex_s50_512x512_200k_jl1cd.py'
 
 model = dict(backbone=dict(depth=101, stem_channels=128))
 
-dataset_type = 'LEVIR_CD_Dataset'
+dataset_type = 'JL1_CD_Dataset'
 data_root = 'data/JL1-CD'
 
 crop_size = (512, 512)

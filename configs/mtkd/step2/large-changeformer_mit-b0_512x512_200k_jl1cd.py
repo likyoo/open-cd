@@ -21,7 +21,7 @@ optim_wrapper = dict(
             'head': dict(lr_mult=10.)
         }))
 
-dataset_type = 'LEVIR_CD_Dataset'
+dataset_type = 'JL1_CD_Dataset'
 data_root = 'data/JL1-CD'
 
 crop_size = (512, 512)
