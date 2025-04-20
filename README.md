@@ -124,7 +124,7 @@ If you find this project useful in your research, please cite:
 @article{opencd,
   title   = {{Open-CD}: A Comprehensive Toolbox for Change Detection},
   author  = {Li, Kaiyu and Jiang, Jiawei and Codegoni, Andrea and Han, Chengxi and Deng, Yupeng and Chen, Keyan and Zheng, Zhuo and
-             Chen, Hao and Zou, Zhengxia and Shi, Zhenwei and Fang, Sheng and Meng, Deyu and Wang, Zhi and Cao, Xiangyong},
+             Chen, Hao and Liu, Ziyuan and Gu, Yuantao and Zou, Zhengxia and Shi, Zhenwei and Fang, Sheng and Meng, Deyu and Wang, Zhi and Cao, Xiangyong},
   journal= {arXiv preprint arXiv:2407.15317},
   year={2024}
 }
