@@ -67,7 +67,7 @@ Supported datasets: | [Descriptions](https://github.com/wenhwu/awesome-remote-se
 - [x] [DSIFN](https://github.com/GeoZcx/A-deeply-supervised-image-fusion-network-for-change-detection-in-remote-sensing-images/tree/master/dataset)
 - [x] [CLCD](https://github.com/liumency/CropLand-CD)
 - [x] [RSIPAC](https://engine.piesat.cn/ai/autolearning/index.html#/dataset/detail?key=8f6c7645-e60f-42ce-9af3-2c66e95cfa27)
-- [x] [SECOND](http://www.captain-whu.com/PROJECT/)
+- [x] [SECOND](https://captain-whu.github.io/SCD/)
 - [x] [Landsat](https://figshare.com/articles/figure/Landsat-SCD_dataset_zip/19946135/1)
 - [x] [BANDON](https://github.com/fitzpchao/BANDON)
 - [x] [JL1-CD](https://github.com/circleLZY/MTKD-CD)
