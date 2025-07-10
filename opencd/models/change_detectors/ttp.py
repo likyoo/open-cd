@@ -26,7 +26,7 @@ class TimeTravellingPixels(SiamEncoderDecoder):
         feat_from = [feat_from]
         feat_to = [feat_to]
         if self.with_neck:
-            x = self.neck(feat_from, feat_from)
+            x = self.neck(feat_from, feat_to)
         else:
             raise ValueError('`NECK` is needed for `TimeTravellingPixels`.')
 
