@@ -4,11 +4,8 @@
 
 ------
 
-<div align="center">
-<a href="https://arxiv.org/abs/2407.15317"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Farxiv.org%2Fabs%2F2407.15317&count_bg=%23FF0000&title_bg=%23555555&icon=arxiv.svg&icon=&icon_color=%23E7E7E7&title=Technical+Report&edge_flat=false"/></a>
-<a href="https://github.com/likyoo/open-cd"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Flikyoo%2Fopen-cdA&count_bg=%2379C83D&title_bg=%23555555&icon=github.svg&icon_color=%23E7E7E7&title=Github&edge_flat=false"/></a>
-<a href="https://huggingface.co/likyoo/Open-CD_Model_Zoo"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fhuggingface.co%2Flikyoo%2FOpen-CD_Model_Zoo&count_bg=%23684BD3&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=%F0%9F%A4%97%20Hugging%20Face&edge_flat=false"/></a>
-</div>
+<font size=4><div align='center' > 
+[[🤗Paper](https://arxiv.org/abs/2407.15317)] | [[🤗Code](https://github.com/likyoo/open-cd)] | [[🤗Checkpoint](https://huggingface.co/likyoo/Open-CD_Model_Zoo)] | [[🤗Video](https://www.youtube.com/watch?v=6Yt9g-vS_FU&t=4s)]</div></font>
 
 ## Introduction
 Open-CD is an open source change detection toolbox based on a series of open source general vision task tools.
